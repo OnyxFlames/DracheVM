@@ -14,7 +14,6 @@ void push_to_stack(std::ifstream &file, std::stack<Object> &stack)
 	{
 		object_buffer.i8 = file.get();
 		stack.push(object_buffer);
-		DEBUG(object_buffer.i8)
 	}
 	else if (variable_size == 2)
 	{
@@ -27,7 +26,6 @@ void push_to_stack(std::ifstream &file, std::stack<Object> &stack)
 		buffer += file.get();
 		object_buffer.i16 = buffer;
 		stack.push(object_buffer);
-		DEBUG(object_buffer.i16)
 	}
 	else if (variable_size == 3)
 	{
@@ -40,7 +38,6 @@ void push_to_stack(std::ifstream &file, std::stack<Object> &stack)
 		buffer += file.get();
 		object_buffer.i32 = buffer;
 		stack.push(object_buffer);
-		DEBUG(object_buffer.i32)
 	}
 	else if (variable_size == 4)
 	{
@@ -53,7 +50,6 @@ void push_to_stack(std::ifstream &file, std::stack<Object> &stack)
 		buffer += file.get();
 		object_buffer.i64 = buffer;
 		stack.push(object_buffer);
-		DEBUG(object_buffer.i64)
 	}
 	else if (variable_size == 5 || variable_size == 6)
 	{
