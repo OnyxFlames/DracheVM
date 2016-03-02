@@ -5,6 +5,7 @@
 #include <stack>
 
 #include "Object.hpp"
+#include "Logger.hpp"
 
 class DracheVM
 {

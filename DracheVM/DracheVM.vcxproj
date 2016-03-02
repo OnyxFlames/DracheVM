@@ -111,11 +111,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DracheVM.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="StackManagement.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DracheVM.hpp" />
+    <ClInclude Include="Logger.hpp" />
     <ClInclude Include="Object.hpp" />
     <ClInclude Include="Opcodes.hpp" />
     <ClInclude Include="StackManagement.hpp" />

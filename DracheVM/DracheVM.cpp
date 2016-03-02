@@ -3,6 +3,8 @@
 #include "StackManagement.hpp"
 
 
+extern Logger logger;
+
 DracheVM::DracheVM(const std::string filelocation)
 {
 	file.open(filelocation, std::ios::binary);
@@ -11,8 +13,6 @@ DracheVM::DracheVM(const std::string filelocation)
 		std::cerr << "vm error: failed to load file. Exiting." << std::endl;
 		std::exit(-1);
 	}
-
-
 	run();
 }
 
@@ -30,6 +30,11 @@ void DracheVM::run()
 			push_to_stack(file, stack);
 			break;
 		case POP:
+			if (stack.empty())
+			{
+				logger.elog("vm error: attempted to pop from empty stack!");
+				break;
+			}
 			stack.pop();
 			break;
 		case POP1:

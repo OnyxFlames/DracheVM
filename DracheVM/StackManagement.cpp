@@ -5,6 +5,8 @@
 
 #define DEBUG(x) std::cout << x << std::endl;
 
+extern Logger logger;
+
 void push_to_stack(std::ifstream &file, std::stack<Object> &stack)
 {
 	Object object_buffer;
@@ -62,6 +64,12 @@ void push_to_stack(std::ifstream &file, std::stack<Object> &stack)
 
 void pop_to_register(uint8_t register_index, DracheVM &vm)
 {
+	if (vm.get_stack().empty())
+	{
+		logger.elog("vm error: attempted to pop from empty stack!");
+		return;
+	}
+
 	register_index--; // Registers are passed 1-based. Decrement to get the actual register.
 	vm.get_register(register_index) = vm.get_stack().top();
 	vm.get_stack().pop();
