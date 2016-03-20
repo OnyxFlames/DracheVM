@@ -110,17 +110,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Compiler.cpp" />
     <ClCompile Include="DracheVM.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="StackManagement.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Compiler.hpp" />
     <ClInclude Include="DracheVM.hpp" />
     <ClInclude Include="Logger.hpp" />
     <ClInclude Include="Object.hpp" />
     <ClInclude Include="Opcodes.hpp" />
     <ClInclude Include="StackManagement.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Documentation.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

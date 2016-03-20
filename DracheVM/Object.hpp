@@ -4,7 +4,7 @@
 
 union Object
 {
-
+	char* str;
 	int8_t	i8;
 	int16_t i16;
 	int32_t i32;

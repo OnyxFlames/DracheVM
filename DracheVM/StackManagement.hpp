@@ -6,7 +6,7 @@
 #include "Object.hpp"
 #include "DracheVM.hpp"
 
-void push_to_stack(std::ifstream &file, std::stack<Object> &stack);
+void push_to_stack(DracheVM &vm);
 
 void pop_to_register(uint8_t register_index, DracheVM &vm);
 

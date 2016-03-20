@@ -36,14 +36,17 @@ enum Opcodes
 			// Push(n) pushes the value in the register onto the top of the stack. Defaults to 0x00.
 	PUSH1, PUSH2, PUSH3, PUSH4,
 
+
+	EXIT,
 };
 
 /*	
 	--Variable Legend--
-		1 = i8
-		2 = i16
-		3 = i32
-		4 = i64
-		5 = f32
-		6 = f64
+		1 = char*
+		2 = i8
+		3 = i16
+		4 = i32
+		5 = i64
+		6 = f32
+		7 = f64
 */

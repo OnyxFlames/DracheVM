@@ -3,63 +3,70 @@
 
 #include <iostream>
 
-#define DEBUG(x) std::cout << x << std::endl;
+#define DEBUG(x) std::cout << "DEBUG: " << x << std::endl;
 
 extern Logger logger;
 
-void push_to_stack(std::ifstream &file, std::stack<Object> &stack)
+void push_to_stack(DracheVM &vm)
 {
 	Object object_buffer;
 	object_buffer.i64 = 0;	// Clear the buffer to 0. This is to guarantee that when pushing values smaller than 64 bits onto the stack, they aren't corrupted with garbage data.
-	byte variable_size = file.get();
-	if (variable_size == 1)
+	byte variable_size = vm.next();
+	
+	if (variable_size == 1)	//char*
 	{
-		object_buffer.i8 = file.get();
-		stack.push(object_buffer);
+
+		//TODO: Add string constant loading.
 	}
 	else if (variable_size == 2)
+	{
+		object_buffer.i8 = vm.next();
+		vm.get_stack().push(object_buffer);
+	}
+
+	else if (variable_size == 3)
 	{
 		uint16_t buffer = 0;
 		for (int c = 0; c < 3; c++)
 		{
-			buffer += file.get();
+			buffer += vm.next();
 			buffer <<= 8;
 		}
-		buffer += file.get();
+		buffer += vm.next();
 		object_buffer.i16 = buffer;
-		stack.push(object_buffer);
-	}
-	else if (variable_size == 3)
-	{
-		uint32_t buffer = 0;
-		for (int c = 0; c < 7; c++)
-		{
-			buffer += file.get();
-			buffer <<= 8;
-		}
-		buffer += file.get();
-		object_buffer.i32 = buffer;
-		stack.push(object_buffer);
+		vm.get_stack().push(object_buffer);
 	}
 	else if (variable_size == 4)
 	{
-		uint64_t buffer = 0;
+		uint32_t buffer = 0;
 		for (int c = 0; c < 3; c++)
 		{
-			buffer += file.get();
+			buffer += vm.next();
 			buffer <<= 8;
 		}
-		buffer += file.get();
-		object_buffer.i64 = buffer;
-		stack.push(object_buffer);
+		buffer += vm.next();
+		object_buffer.i32 = buffer;
+		vm.get_stack().push(object_buffer);
 	}
-	else if (variable_size == 5 || variable_size == 6)
+	else if (variable_size == 5)
+	{
+		uint64_t buffer = 0;
+		for (int c = 0; c < 7; c++)
+		{
+			buffer += vm.next();
+			buffer <<= 8;
+		}
+		buffer += vm.next();
+		object_buffer.i64 = buffer;
+		vm.get_stack().push(object_buffer);
+	}
+	else if (variable_size == 6 || variable_size == 7)
 	{
 		std::cerr << "vm error: floating point literals are yet to be supported. Exiting." << std::endl;
 		std::exit(-1);
 	}
 	else
-		std::cerr << "vm error: variable type " << variable_size << " at location " << file.tellg() << " is not supported(1 - 6). Exiting." << std::endl;
+		std::cerr << "vm error: variable type " << variable_size << " at location " << vm.get_state().current_position << " is not supported(1 - 7). Exiting." << std::endl;
 }
 
 void pop_to_register(uint8_t register_index, DracheVM &vm)
