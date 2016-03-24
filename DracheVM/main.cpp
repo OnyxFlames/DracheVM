@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
 
 void print_help(std::string prog_name)
 {
-	std::cout << "Usage: \n" + prog_name +
-		" -c <filename> to compile.\n" +
+	std::cout << "Usage: \n\t" + prog_name +
+		" -c <filename> to compile.\n\t" +
 		prog_name + " -r <filename> to run." << std::endl;
 }

@@ -21,8 +21,8 @@ private:
 	std::vector<byte> bytecode;
 public:
 	Compiler();
-	Compiler(std::string file);
-	void open(std::string file);
+	Compiler(const std::string &file);
+	void open(const std::string &file);
 	void run();
 	void gen();
 	~Compiler();

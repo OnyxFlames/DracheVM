@@ -12,8 +12,8 @@ private:
 	bool has_error_occurred = false;
 public:
 	Logger();
-	Logger(std::string log_file);
-	void open(std::string log_file);
+	Logger(const std::string &log_file);
+	void open(const std::string &log_file);
 	void log(const std::string err);
 	void elog(const std::string err);
 	bool is_logging();

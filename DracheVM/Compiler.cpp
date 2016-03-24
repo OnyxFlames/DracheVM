@@ -2,12 +2,12 @@
 
 Compiler::Compiler() {}
 
-Compiler::Compiler(std::string file)
+Compiler::Compiler(const std::string &file)
 {
 	open(file);
 }
 
-void Compiler::open(std::string file)
+void Compiler::open(const std::string &file)
 {
 	file_name = file;
 	source_file.open(file);

@@ -7,7 +7,7 @@ PUSH 0x01 0xff
 ```
 Push causes the DVM to read the next byte, and depending on that bytes value, it will read either 1, 2, 4, or 8 bytes afterward.(8, 16, 32, and 64 bits respectively).
 The legend for what value dictates how many bytes are read and be found as a comment in [Opcodes.hpp](/DracheVM/Opcodes.hpp)
-Other opcodes do not read any bytes passed the originial one and jump straight back to executing code after.
+Other opcodes do not read any bytes passed the original one and jump straight back to executing code after.
 ```
 ROT
 ```

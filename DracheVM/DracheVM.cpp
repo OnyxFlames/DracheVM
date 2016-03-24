@@ -89,7 +89,6 @@ void DracheVM::run()
 			vm_exit();
 			break;
 		default:
-			std::cout << "Failed byte:\nLocation: " << file.tellg() << "\nValue: " << temp << std::endl;
 			logger.elog("vm error: read unknown byte. rom could be corrupted!");
 		}
 	}
@@ -121,12 +120,12 @@ void DracheVM::rel_jump(int32_t jump_distance)
 }
 
 void DracheVM::jump(int32_t jump_address)	// Have the VM's pointer jump to a different part of the ROM.
-						// This function reads the next two bytes, constructs a 16 bit address, and goes to it.
-{
+											// This function reads the next two bytes, constructs a 16 bit address, and goes to it.
+{											// The jump_address defaults to -1, if it is still -1 when the function is called it reads the next two bytes. Otherwise it goes to that address.
 	if (jump_address == -1)
 	{
 
-		address = file.tellg();
+		address = (uint16_t)file.tellg();
 		uint16_t jump_address = 0;
 		/*
 		For some reason this was set to loop 3 times. I'll remove this once I figure out why it was set to do that.

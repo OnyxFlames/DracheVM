@@ -74,6 +74,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -115,6 +116,7 @@
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="StackManagement.cpp" />
+    <ClCompile Include="SystemIO.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Compiler.hpp" />
@@ -123,6 +125,7 @@
     <ClInclude Include="Object.hpp" />
     <ClInclude Include="Opcodes.hpp" />
     <ClInclude Include="StackManagement.hpp" />
+    <ClInclude Include="SystemIO.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Documentation.md" />

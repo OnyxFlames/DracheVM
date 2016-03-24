@@ -3,12 +3,12 @@
 Logger::Logger()
 {/*Intentioonally empty*/}
 
-Logger::Logger(std::string log_file)
+Logger::Logger(const std::string &log_file)
 {
 	open(log_file);
 }
 
-void Logger::open(std::string log_file)
+void Logger::open(const std::string &log_file)
 {
 	logfile.open(log_file);
 	if (!logfile.is_open())
