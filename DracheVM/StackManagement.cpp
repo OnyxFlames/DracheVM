@@ -85,7 +85,12 @@ void push_to_stack(DracheVM &vm)
 		std::exit(-1);
 	}
 	else
-		std::cerr << "vm error: variable type " << variable_size << " at location " << vm.get_state().current_position << " is not supported(1 - 7). Exiting." << std::endl;
+	{
+		if (variable_size > 0)
+			std::cerr << "vm error: variable type " << variable_size << " at location " << vm.get_state().current_position << " is not supported(1 - 7). Exiting." << std::endl;
+		else
+			std::cerr << "vm error: variable type UNKNOWN at location " << vm.get_state().current_position << " is not supported(1 - 7). Exiting." << std::endl;
+	}
 }
 
 void pop_to_register(uint8_t register_index, DracheVM &vm)

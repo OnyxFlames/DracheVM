@@ -23,6 +23,7 @@ private:
 	std::ifstream file;
 	vm_state state;
 	void vm_exit();
+	void stack_dump();
 public:
 	DracheVM();
 	DracheVM(const std::string filelocation);

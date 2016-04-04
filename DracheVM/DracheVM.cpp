@@ -1,6 +1,10 @@
 #include "DracheVM.hpp"
 #include "Opcodes.hpp"
 #include "StackManagement.hpp"
+#include "VariableManip.hpp"
+#include "Syscall.hpp"
+
+#include <bitset>
 
 extern Logger logger;
 
@@ -29,10 +33,14 @@ void DracheVM::run()
 {
 	while (!file.eof() && !file.fail())
 	{
+		byte byte_buff[2];
 		Object object_buffer; 
 		object_buffer.i64 = 0;	// Clear the buffer to 0. This is to guarantee that when pushing values smaller than 64 bits onto the stack, they aren't corrupted with garbage data.
 		switch (file.get())
 		{
+		case NOP:
+			// Do nothing.
+			break;
 		case PUSH:
 			jump();
 			push_to_stack(*this);
@@ -84,6 +92,83 @@ void DracheVM::run()
 			stack.pop();
 			stack.push(buffer[0]);
 			stack.push(buffer[1]);
+			break;
+		case ADD8:
+			add8(*this);
+			break;
+		case SUB8:
+			sub8(*this);
+			break;
+		case MUL8:
+			mul8(*this);
+			break;
+		case DIV8:
+			div8(*this);
+			break;
+		case ADD16:
+			add16(*this);
+			break;
+		case SUB16:
+			sub16(*this);
+			break;
+		case MUL16:
+			mul16(*this);
+			break;
+		case DIV16:
+			div16(*this);
+			break;
+		case ADD32:
+			add32(*this);
+			break;
+		case SUB32:
+			sub32(*this);
+			break;
+		case MUL32:
+			mul32(*this);
+			break;
+		case DIV32:
+			div32(*this);
+			break;
+		case ADD64:
+			add64(*this);
+			break;
+		case SUB64:
+			sub64(*this);
+			break;
+		case MUL64:
+			mul64(*this);
+			break;
+		case DIV64:
+			div64(*this);
+			break;
+		case ADDF32:
+			addf32(*this);
+			break;
+		case SUBF32:
+			subf32(*this);
+			break;
+		case MULF32:
+			mulf32(*this);
+			break;
+		case DIVF32:
+			divf32(*this);
+			break;
+		case ADDF64:
+			addf64(*this);
+			break;
+		case SUBF64:
+			subf64(*this);
+			break;
+		case MULF64:
+			mulf64(*this);
+			break;
+		case DIVF64:
+			divf64(*this);
+			break;
+		case SYSCALL:
+			byte_buff[0] = file.get();
+			byte_buff[1] = file.get();
+			syscall(byte_buff[0], byte_buff[1], *this);
 			break;
 		case EXIT:
 			vm_exit();
@@ -157,16 +242,22 @@ vm_state DracheVM::get_state()
 
 void DracheVM::vm_exit()
 {
-
+	//stack_dump();
+	std::exit(1);
+}
+void DracheVM::stack_dump()
+{
 	std::cout << "Registers:\n";
+	std::cout << "HEX - DEC\n";
 	for (unsigned i = 0; i < 4; i++)
 	{
-		std::cout << std::hex << _register[i].i64 << "\n";
+		std::cout << /*std::bitset<64>(_register[i].i64) << " - " <<*/ std::hex << _register[i].i64 << " - " << std::dec << _register[i].i64 << "\n";
 	}
 	std::cout << "Stack Dump(" << stack.size() << "):\n";
+	std::cout << "HEX - DEC\n";
 	while (!stack.empty())
 	{
-		std::cout << std::hex << stack.top().i64 << "\n";
+		std::cout << /*std::bitset<64>(stack.top().i64) << " - " <<*/ std::hex << stack.top().i64 << " - " << std::dec << stack.top().i64 << "\n";
 		stack.pop();
 	}
 
@@ -179,11 +270,10 @@ void DracheVM::vm_exit()
 	while (!stack.empty())
 		stack.pop();
 
-	std::exit(1);
 }
-
 DracheVM::~DracheVM()
 {
+	/* This isnt used anymore as the state is set to closed on the exit call.
 	if (state.is_open) 
 	{
 		std::cout << "Registers:\n";
@@ -198,4 +288,5 @@ DracheVM::~DracheVM()
 			stack.pop();
 		}
 	}
+	*/
 }

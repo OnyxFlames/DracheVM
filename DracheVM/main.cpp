@@ -6,6 +6,7 @@
 #include "Compiler.hpp"
 #include "DracheVM.hpp"
 #include "Logger.hpp"
+#include "SystemIO.hpp"
 
 Logger logger("output.log");
 
@@ -15,6 +16,13 @@ std::string compile_file;
 std::string run_file;
 
 void print_help(std::string prog_name);
+
+// I know, avoid globals at all costs, but it is global by design, 
+// all parts of the vm need to access it and its much easier to make 
+// it global than to pass it around to (almost) literally /every/ function that needs it.
+
+SystemIO *io;
+//RandNumGen *rng; // TODO: Implement random number generation static system.
 
 int main(int argc, char* argv[])
 {
@@ -31,12 +39,12 @@ int main(int argc, char* argv[])
 			print_help(argv[0]);
 			std::exit(1);
 		}
-		if (std::strcmp(argv[i], "-r") == 0)
+		else if (std::strcmp(argv[i], "-r") == 0)
 		{
 			run_mode = true;
 			run_file = argv[++i];
 		}
-		if (std::strcmp(argv[i], "-c") == 0)
+		else if (std::strcmp(argv[i], "-c") == 0)
 		{
 			compile_mode = true;
 			compile_file = argv[++i];
@@ -45,6 +53,8 @@ int main(int argc, char* argv[])
 
 	Compiler compiler;
 	DracheVM vm;
+	std::shared_ptr<std::stack<Object>> stk_ptr = std::make_shared<std::stack<Object>>(vm.get_stack()); //	Get the pointer of the stack from the instance of the currently running VM. 
+	io = new SystemIO(stk_ptr);																			//	This will be used by almost all the soon-to-be implemented static systems.
 
 	if (compile_mode)
 		compiler.open(compile_file);

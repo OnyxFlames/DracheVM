@@ -91,6 +91,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -116,7 +117,9 @@
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="StackManagement.cpp" />
+    <ClCompile Include="Syscall.cpp" />
     <ClCompile Include="SystemIO.cpp" />
+    <ClCompile Include="VariableManip.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Compiler.hpp" />
@@ -125,7 +128,9 @@
     <ClInclude Include="Object.hpp" />
     <ClInclude Include="Opcodes.hpp" />
     <ClInclude Include="StackManagement.hpp" />
+    <ClInclude Include="Syscall.hpp" />
     <ClInclude Include="SystemIO.hpp" />
+    <ClInclude Include="VariableManip.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Documentation.md" />

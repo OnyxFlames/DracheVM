@@ -1,5 +1,7 @@
 #include "Compiler.hpp"
 
+#include "SystemIO.hpp"
+
 Compiler::Compiler() {}
 
 Compiler::Compiler(const std::string &file)
@@ -39,6 +41,44 @@ void Compiler::run()
 		else if (buffer == "PUSH2") bytecode.push_back(PUSH2);
 		else if (buffer == "PUSH3") bytecode.push_back(PUSH3);
 		else if (buffer == "PUSH4") bytecode.push_back(PUSH4);
+		else if (buffer == "ADD8") bytecode.push_back(ADD8);
+		else if (buffer == "SUB8") bytecode.push_back(SUB8);
+		else if (buffer == "MUL8") bytecode.push_back(MUL8);
+		else if (buffer == "DIV8") bytecode.push_back(DIV8);
+		else if (buffer == "ADD16") bytecode.push_back(ADD16);
+		else if (buffer == "SUB16") bytecode.push_back(SUB16);
+		else if (buffer == "MUL16") bytecode.push_back(MUL16);
+		else if (buffer == "DIV16") bytecode.push_back(DIV16);
+		else if (buffer == "ADD32") bytecode.push_back(ADD32);
+		else if (buffer == "SUB32") bytecode.push_back(SUB32);
+		else if (buffer == "MUL32") bytecode.push_back(MUL32);
+		else if (buffer == "DIV32") bytecode.push_back(DIV32);
+		else if (buffer == "ADD64") bytecode.push_back(ADD64);
+		else if (buffer == "SUB64") bytecode.push_back(SUB64);
+		else if (buffer == "MUL64") bytecode.push_back(MUL64);
+		else if (buffer == "DIV64") bytecode.push_back(DIV64);
+		else if (buffer == "ADDF32") bytecode.push_back(ADDF32);
+		else if (buffer == "SUBF32") bytecode.push_back(SUBF32);
+		else if (buffer == "MULF32") bytecode.push_back(MULF32);
+		else if (buffer == "DIVF32") bytecode.push_back(DIVF32);
+		else if (buffer == "ADDF64") bytecode.push_back(ADDF64);
+		else if (buffer == "SUBF64") bytecode.push_back(SUBF64);
+		else if (buffer == "MULF64") bytecode.push_back(MULF64);
+		else if (buffer == "DIVF64") bytecode.push_back(DIVF64);
+		else if (buffer == "SYSCALL") bytecode.push_back(SYSCALL);
+		else if (buffer == "IO_PRINTNL") bytecode.push_back(PRINTNL);
+		else if (buffer == "IO_PRINTSTR") bytecode.push_back(PRINTSTR);
+		else if (buffer == "IO_PRINTCHR") bytecode.push_back(PRINTCHR);
+		else if (buffer == "IO_PRINTINT8") bytecode.push_back(PRINTINT8);
+		else if (buffer == "IO_PRINTINT16") bytecode.push_back(PRINTINT16);
+		else if (buffer == "IO_PRINTINT32") bytecode.push_back(PRINTINT32);
+		else if (buffer == "IO_PRINTINT64") bytecode.push_back(PRINTINT64);
+		else if (buffer == "IO_READSTR") bytecode.push_back(READSTR);
+		else if (buffer == "IO_READCHR") bytecode.push_back(READCHR);
+		else if (buffer == "IO_READINT8") bytecode.push_back(READINT8);
+		else if (buffer == "IO_READINT16") bytecode.push_back(READINT16);
+		else if (buffer == "IO_READINT32") bytecode.push_back(READINT32);
+		else if (buffer == "IO_READINT64") bytecode.push_back(READINT64);
 		else if (buffer == "EXIT")	bytecode.push_back(EXIT);
 	}
 

@@ -6,6 +6,8 @@
 #include <vector>
 #include "Logger.hpp"
 #include "Object.hpp"
+#include "Opcodes.hpp"
+#include "DracheVM.hpp"
 
 extern Logger logger;
 
@@ -18,23 +20,33 @@ extern Logger logger;
 enum IO_OPCODES
 {
 	// Print the value on the top of the stack from stdout. Pop it afterwards.
-	PRINTSTR = 01,
+	PRINTNL = 01,
+	PRINTSTR = 02,
 	PRINTCHR,
-	PRINTINT,
+	PRINTINT8,
+	PRINTINT16,
+	PRINTINT32,
+	PRINTINT64,
 
 
 	// Read the value from stdin and push it onto the stack.
 	READSTR,
 	READCHR,
-	READINT,
+	READINT8,
+	READINT16,
+	READINT32,
+	READINT64
 };
 
 class SystemIO
 {
 private:
-	std::unique_ptr<std::stack<Object>> stack_ptr;
+	std::shared_ptr<std::stack<Object>> stack_ptr;
 public:
-	SystemIO(std::unique_ptr<std::stack<Object>> &_stack_ptr);
+	SystemIO();
+	SystemIO(std::shared_ptr<std::stack<Object>> &_stack_ptr);
+	bool bind_stack(std::shared_ptr<std::stack<Object>> &_stack_ptr);
+	void run_opcode(byte opcode, DracheVM &vm);
 	~SystemIO();
 };
 
