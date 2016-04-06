@@ -116,6 +116,7 @@
     <ClCompile Include="DracheVM.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Misc_Utils.cpp" />
     <ClCompile Include="StackManagement.cpp" />
     <ClCompile Include="Syscall.cpp" />
     <ClCompile Include="SystemIO.cpp" />
@@ -125,6 +126,7 @@
     <ClInclude Include="Compiler.hpp" />
     <ClInclude Include="DracheVM.hpp" />
     <ClInclude Include="Logger.hpp" />
+    <ClInclude Include="Misc_Utils.hpp" />
     <ClInclude Include="Object.hpp" />
     <ClInclude Include="Opcodes.hpp" />
     <ClInclude Include="StackManagement.hpp" />

@@ -1,4 +1,5 @@
 #include "Compiler.hpp"
+#include "Misc_Utils.hpp"	// is_string(std::string) && is_partial_string(std::string)
 
 #include "SystemIO.hpp"
 
@@ -30,6 +31,27 @@ void Compiler::run()
 
 		// If the first two digits are '0' and 'x' then its a hex number.
 		if (buffer[0] == '0' && buffer[1] == 'x') bytecode.push_back(std::stoi(buffer, 0, 16));
+		if (buffer[0] == '\"')
+		{
+			if (is_string(buffer))
+			{
+				if (is_clean_string(buffer))
+				{
+					for (char c : buffer) 
+					{
+						if (c == '"')
+							break;
+						bytecode.push_back(c);
+					}
+					bytecode.push_back(NULL);
+					//If it's a proper, clean string, just dump all of it's data into the bytecode omitting the quotation marks.
+				}
+			}
+			else if (is_partial_string(buffer))
+			{
+
+			}
+		}
 		else if (buffer == "PUSH") bytecode.push_back(PUSH);
 		else if (buffer == "POP")  bytecode.push_back(POP);
 		else if (buffer == "ROT")  bytecode.push_back(ROT);
