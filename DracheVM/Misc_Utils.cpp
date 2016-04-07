@@ -1,34 +1,30 @@
 #include "Misc_Utils.hpp"
 
+#include <cctype>
 
 bool is_partial_string(std::string str)
 {
-	/*
-
-		If the passed string starts with a quote but ends with a space, chances are it isn't a complete string;
-		if that's the case, this function returns true, otherwise false.
-
-	*/
-	return false;
+	if (str.at(str.size()) == '"')
+		return false;
+	return true;
 }
 
 bool is_clean_string(std::string str)
 {
-	/*
-	
-		Partial or not, if the string contains escape characters or quotation marks other than the first and last - return false, otherwise return true.
-		Escape characters need to be handled differently, hence this check.
-	
-	*/
-	return false;
+	for (char c : str)
+	{
+		if (isspace(c) ||
+			ispunct(c) ||
+			iscntrl(c))
+			return false;
+	}
+	return true;
 }
 
 bool is_string(std::string str)
 {
-	/*
-	
-		If the passed string is properly quoted (and internal quotes were escaped) return true, else false.
-	
-	*/
-	return false;
+	if (str.at(0x00) == '"' && str.at(str.size()) == '"')
+		return true;
+	else
+		return false;
 }
