@@ -8,7 +8,7 @@ enum Opcodes
 	
 	PUSH,	// Push takes the next byte as the numbers size as n, then pushes it onto the stack by reading the next n bytes.
 	POP,	// Pop removes the top object off of the stack.
-
+	DEALLOC, // Deallocated the top value on the stack. The typically is called right before the value is popped off the stack.
 	ROT,	// Rot pops the first two objects into temporary buffers, then pushes the first, then second objects back onto the stack - swapping them.
 
 
@@ -57,7 +57,6 @@ enum Opcodes
 	PUSH1, PUSH2, PUSH3, PUSH4,
 
 
-	NEWSYSTEM,
 	SYSCALL,
 
 
