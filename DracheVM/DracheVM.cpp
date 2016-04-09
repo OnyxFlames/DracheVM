@@ -271,6 +271,15 @@ void DracheVM::stack_dump()
 		stack.pop();
 
 }
+
+DracheVM DracheVM::get_vm()
+{
+	/*
+		TODO: Add private functions to copy over all of the vms internal state over to a temporary one, then return that temporary one.
+		This will be used to clone VM's.
+	*/
+}
+
 DracheVM::~DracheVM()
 {
 	/* This isnt used anymore as the state is set to closed on the exit call.
