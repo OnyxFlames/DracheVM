@@ -36,7 +36,7 @@ public:
 	void jump(int32_t jump_address = -1);
 	void restore();
 	vm_state get_state();
-	DracheVM get_vm();
+	DracheVM* get_vm();
 	~DracheVM();
 };
 

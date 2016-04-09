@@ -41,6 +41,7 @@ enum IO_OPCODES
 class SystemIO
 {
 private:
+	bool init = false;
 	std::shared_ptr<std::stack<Object>> stack_ptr;
 public:
 	SystemIO();

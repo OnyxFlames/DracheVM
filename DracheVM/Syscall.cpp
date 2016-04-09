@@ -13,7 +13,7 @@ void syscall(byte system, byte code, DracheVM &vm)
 	}
 	else if (system == RANDNUMGEN)
 	{
-
+		rng->run_opcode(code, vm);
 	}
 	else
 	{

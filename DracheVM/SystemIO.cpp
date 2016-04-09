@@ -7,14 +7,14 @@ SystemIO::SystemIO()
 
 SystemIO::SystemIO(std::shared_ptr<std::stack<Object>> &_stack_ptr)
 {
-	bind_stack(_stack_ptr);
+	init = bind_stack(_stack_ptr);
 }
 
 bool SystemIO::bind_stack(std::shared_ptr<std::stack<Object>> &_stack_ptr)
 {
 	if (_stack_ptr == nullptr)
 	{
-		logger.elog("io error: failed to initialize io system");
+		logger.elog("io error: failed to initialize io system.");
 		return false;
 	}
 	stack_ptr = _stack_ptr;
@@ -23,6 +23,11 @@ bool SystemIO::bind_stack(std::shared_ptr<std::stack<Object>> &_stack_ptr)
 
 void SystemIO::run_opcode(byte opcode, DracheVM &vm)
 {
+	if (!init)
+	{
+		logger.elog("io error: opcode called when io system not initialized.");
+		return;
+	}
 	Object obj_buff;
 	obj_buff.i64 = 0x00000000;
 
