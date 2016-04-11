@@ -3,6 +3,8 @@
 
 #include "SystemIO.hpp"
 
+#include <map>
+
 Compiler::Compiler() {}
 
 Compiler::Compiler(const std::string &file)
@@ -25,12 +27,21 @@ void Compiler::open(const std::string &file)
 void Compiler::run()
 {
 	std::string buffer = "";
+	std::map<std::string, int> label_map;
+	int position_count = -1;
 	while (!source_file.eof())
 	{
 		source_file >> buffer;
+		position_count++;
 
 		// If the first two digits are '0' and 'x' then its a hex number.
 		if (buffer[0] == '0' && buffer[1] == 'x') bytecode.push_back(std::stoi(buffer, 0, 16));
+		if (buffer[0] == '.') // label creation.
+		{
+			// TODO: move position_count > 255 check up here.
+			buffer.erase(buffer.begin());	// remove the '.' and store the label and its position in a map to be looked up later.
+			label_map.insert(std::pair<std::string, int>(buffer, position_count));
+		}
 		if (buffer[0] == '\"')
 		{
 			if (is_string(buffer))
@@ -102,6 +113,18 @@ void Compiler::run()
 		else if (buffer == "IO_READINT32") bytecode.push_back(READINT32);
 		else if (buffer == "IO_READINT64") bytecode.push_back(READINT64);
 		else if (buffer == "EXIT")	bytecode.push_back(EXIT);
+		else if (is_declared(label_map, buffer))
+		{
+		  //if (position_count > 255)
+		  //{
+		  //	std::cerr << "compile error: only supports labels up to the first 255 for now. more plan to be implemented. Exiting." << std::endl;
+		  //	std::exit(-1);
+		  //}
+		  //else
+		  //{
+				bytecode.push_back(label_map[buffer]);
+		  //}
+		}
 	}
 
 	gen();

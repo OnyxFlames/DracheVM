@@ -2,6 +2,7 @@
 
 #include <cctype>
 
+
 bool is_partial_string(std::string str)
 {
 	if (str.at(str.size()) == '"')
@@ -27,4 +28,17 @@ bool is_string(std::string str)
 		return true;
 	else
 		return false;
+}
+
+bool is_declared(std::map<std::string, int> &_label_map, std::string _label)
+{
+	// iterate through the map checking for the label.
+	for (std::pair<std::string, int> pair : _label_map) 
+	{
+		if (pair.first == _label)
+			return true;
+		else
+			continue;
+	}
+	return false;
 }
