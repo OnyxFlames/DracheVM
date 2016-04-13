@@ -8,7 +8,7 @@ enum Opcodes
 	
 	PUSH,	// Push takes the next byte as the numbers size as n, then pushes it onto the stack by reading the next n bytes.
 	POP,	// Pop removes the top object off of the stack.
-	DEALLOC, // Deallocated the top value on the stack. The typically is called right before the value is popped off the stack.
+	DEALLOC,// Deallocated the top value on the stack. The typically is called right before the value is popped off the stack.
 	ROT,	// Rot pops the first two objects into temporary buffers, then pushes the first, then second objects back onto the stack - swapping them.
 
 
@@ -29,7 +29,7 @@ enum Opcodes
 	f32TOi8, f32TOi16, f32TOi32, f32TOi64, f32TOf64,
 	f64TOi8, f64TOi16, f64TOi32, f64TOi64, f64TOf32,
 
-
+	GOTO,
 			// Conditional operators. In order: If equal, if not equal, if less than, if greater than.
 	EQGOTO,
 	INEQGOTO,

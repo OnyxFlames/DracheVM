@@ -170,6 +170,23 @@ void DracheVM::run()
 			byte_buff[1] = file.get();
 			syscall(byte_buff[0], byte_buff[1], *this);
 			break;
+		case GOTO:
+			//TODO: assemble 16 bit address, then jump.
+			jump(file.get());
+			break;
+		case EQGOTO:
+			object_buffer = stack.top();
+			stack.pop();
+			if (object_buffer.i64 == stack.top().i64)
+			{
+				jump(file.get());
+			}
+			else
+			{
+				// Skip the address and continue executing code below.
+				rel_jump(0x02);
+			}
+			break;
 		case EXIT:
 			vm_exit();
 			break;
@@ -211,16 +228,16 @@ void DracheVM::jump(int32_t jump_address)	// Have the VM's pointer jump to a dif
 	{
 
 		address = (uint16_t)file.tellg();
-		uint16_t jump_address = 0;
+		uint16_t _jump_address = 0;
 		/*
 		For some reason this was set to loop 3 times. I'll remove this once I figure out why it was set to do that.
 		for (int c = 0; c < 3; c++)
 		{*/
-		jump_address += file.get();
-		jump_address <<= 8;
+		_jump_address += file.get();
+		_jump_address <<= 8;
 		//}
-		jump_address += file.get();
-		file.seekg(jump_address);
+		_jump_address += file.get();
+		file.seekg(_jump_address);
 	}
 	else
 	{
