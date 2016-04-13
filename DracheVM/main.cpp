@@ -9,6 +9,11 @@
 #include "SystemIO.hpp"
 #include "RandomNumGen.hpp"
 
+
+//#define NDEBUG
+#include <cassert>
+
+
 Logger logger("output.log");
 
 bool compile_mode = false;
@@ -27,6 +32,12 @@ RandomNumGen *rng;
 
 int main(int argc, char* argv[])
 {
+	// Assertions. If any of these fail, the VM isn't guaranteed to run properly.
+	assert(sizeof(char) == sizeof(int8_t));
+	assert(sizeof(short) == sizeof(int16_t));
+	assert(sizeof(int) == sizeof(int32_t));
+	assert(sizeof(long long) == sizeof(int64_t));
+
 
 	if (argc < 2)
 	{

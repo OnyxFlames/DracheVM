@@ -28,7 +28,7 @@ void Compiler::run()
 {
 	std::string buffer = "";
 	std::map<std::string, int> label_map;
-	int position_count = -1;
+	int16_t position_count = -1;
 	while (!source_file.eof())
 	{
 		source_file >> buffer;
@@ -40,8 +40,14 @@ void Compiler::run()
 		{
 			if (position_count > 255)
 			{
-				std::cerr << "compile error: only supports labels up to the first 255 for now. more plan to be implemented. Exiting." << std::endl;
-				std::exit(-1);
+				// TODO: Move this byte splitting code into the section where the compiler emits bytes rather than where it stores labels.
+				// TODO: Possibly turn this section of code into a fuction as well.
+				int16_t _position = position_count;	// Don't wanna modify the position_count
+				int8_t buff[2] = { 0 };				// Create a two byte buffer.
+				buff[1] = (int8_t)_position;		// Store the last 8 bits into the second byte.
+				_position >>= 8;					// Slide the first 8 bits over into the last 8.
+				buff[0] = (int8_t)_position;		// Store the (now) last 8 bits into the first byte.
+				label_map.insert(std::pair<std::string, int>(buffer, _position));
 			}
 			else
 			{

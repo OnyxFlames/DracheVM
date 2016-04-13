@@ -238,15 +238,13 @@ void DracheVM::jump(int32_t jump_address)	// Have the VM's pointer jump to a dif
 	{
 
 		address = (uint16_t)file.tellg();
+		
 		uint16_t _jump_address = 0;
-		/*
-		For some reason this was set to loop 3 times. I'll remove this once I figure out why it was set to do that.
-		for (int c = 0; c < 3; c++)
-		{*/
+
 		_jump_address += file.get();
 		_jump_address <<= 8;
-		//}
 		_jump_address += file.get();
+
 		file.seekg(_jump_address);
 	}
 	else
