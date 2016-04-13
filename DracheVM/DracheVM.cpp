@@ -3,6 +3,7 @@
 #include "StackManagement.hpp"
 #include "VariableManip.hpp"
 #include "Syscall.hpp"
+#include "Misc_Utils.hpp"
 
 #include <bitset>
 
@@ -33,7 +34,7 @@ void DracheVM::run()
 {
 	while (!file.eof() && !file.fail())
 	{
-		byte byte_buff[2];
+		byte byte_buff[2]{ 0 };
 		Object object_buffer; 
 		object_buffer.i64 = 0;	// Clear the buffer to 0. This is to guarantee that when pushing values smaller than 64 bits onto the stack, they aren't corrupted with garbage data.
 		switch (file.get())
@@ -171,15 +172,24 @@ void DracheVM::run()
 			syscall(byte_buff[0], byte_buff[1], *this);
 			break;
 		case GOTO:
-			//TODO: assemble 16 bit address, then jump.
-			jump(file.get());
+			byte_buff[0] = file.get();
+			byte_buff[1] = file.get();
+			jump
+				(assemble_16bit_address
+					(byte_buff[0], byte_buff[1]));
 			break;
 		case EQGOTO:
 			object_buffer = stack.top();
 			stack.pop();
+			// compare the top two values on the stack as their pure 64-bit wide values.
 			if (object_buffer.i64 == stack.top().i64)
 			{
-				jump(file.get());
+				stack.pop();
+				byte_buff[0] = file.get();
+				byte_buff[1] = file.get();
+				jump
+					(assemble_16bit_address
+						(byte_buff[0], byte_buff[1]));
 			}
 			else
 			{

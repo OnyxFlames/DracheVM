@@ -106,6 +106,8 @@ void Compiler::run()
 		else if (buffer == "MULF64") bytecode.push_back(MULF64);
 		else if (buffer == "DIVF64") bytecode.push_back(DIVF64);
 		else if (buffer == "SYSCALL") bytecode.push_back(SYSCALL);
+		else if (buffer == "GOTO") bytecode.push_back(GOTO);
+		else if (buffer == "EQGOTO") bytecode.push_back(EQGOTO);
 		else if (buffer == "IO_PRINTNL") bytecode.push_back(PRINTNL);
 		else if (buffer == "IO_PRINTSTR") bytecode.push_back(PRINTSTR);
 		else if (buffer == "IO_PRINTCHR") bytecode.push_back(PRINTCHR);

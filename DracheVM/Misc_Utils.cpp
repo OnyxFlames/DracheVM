@@ -42,3 +42,11 @@ bool is_declared(std::map<std::string, int> &_label_map, std::string _label)
 	}
 	return false;
 }
+
+uint16_t assemble_16bit_address(uint8_t first, uint8_t second)
+{
+	uint16_t ret = first;
+	ret <<= 8;
+	ret += second;
+	return ret;
+}
