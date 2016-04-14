@@ -27,7 +27,7 @@ void Compiler::open(const std::string &file)
 void Compiler::run()
 {
 	std::string buffer = "";
-	std::map<std::string, int> label_map;
+	std::map<std::string, int16_t> label_map;
 	int16_t position_count = -1;
 	while (!source_file.eof())
 	{
@@ -38,22 +38,8 @@ void Compiler::run()
 		if (buffer[0] == '0' && buffer[1] == 'x') bytecode.push_back(std::stoi(buffer, 0, 16));
 		if (buffer[0] == '.') // label creation.
 		{
-			if (position_count > 255)
-			{
-				// TODO: Move this byte splitting code into the section where the compiler emits bytes rather than where it stores labels.
-				// TODO: Possibly turn this section of code into a fuction as well.
-				int16_t _position = position_count;	// Don't wanna modify the position_count
-				int8_t buff[2] = { 0 };				// Create a two byte buffer.
-				buff[1] = (int8_t)_position;		// Store the last 8 bits into the second byte.
-				_position >>= 8;					// Slide the first 8 bits over into the last 8.
-				buff[0] = (int8_t)_position;		// Store the (now) last 8 bits into the first byte.
-				label_map.insert(std::pair<std::string, int>(buffer, _position));
-			}
-			else
-			{
 				buffer.erase(buffer.begin());	// remove the '.' and store the label and its position in a map to be looked up later.
-				label_map.insert(std::pair<std::string, int>(buffer, position_count));
-			}
+				label_map.insert(std::pair<std::string, int16_t>(buffer, position_count));
 		}
 		if (buffer[0] == '\"')
 		{
@@ -130,7 +116,23 @@ void Compiler::run()
 		else if (buffer == "EXIT")	bytecode.push_back(EXIT);
 		else if (is_declared(label_map, buffer))
 		{
-				bytecode.push_back(label_map[buffer]);
+			// If the location of the referenced label is greater than 255, we'll need two bytes to refer to it.
+			// The to_bytes(int16_t val); function returns an array of two bytes that will get emitted into the rom's bytecode.
+			if (label_map[buffer] > 255)
+			{
+				// This pushes back the byte value returned from to_bytes when passed the value of the label's position, in index 0, or 1.
+				bytecode.push_back
+					(to_bytes(label_map[buffer])[0]);
+				bytecode.push_back
+					(to_bytes(label_map[buffer])[1]);
+			}
+			// If the location of the referenced label is smaller than 255, we still have to emit two bytes.
+			// The first byte is just going to be 0x00, as we only need the second one to refer to the location.
+			else
+			{
+				bytecode.push_back(0x00);
+				bytecode.push_back((int8_t)label_map[buffer]);
+			}
 		}
 	}
 

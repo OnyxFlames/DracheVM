@@ -174,6 +174,7 @@ void DracheVM::run()
 		case GOTO:
 			byte_buff[0] = file.get();
 			byte_buff[1] = file.get();
+			//DEBUG(assemble_16bit_address(byte_buff[0], byte_buff[1]));
 			jump
 				(assemble_16bit_address
 					(byte_buff[0], byte_buff[1]));
