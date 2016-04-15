@@ -1,8 +1,13 @@
 #pragma once
 
+#include <cstdlib>
 #include <string>
 #include <map>
 #include <array>
+
+#include "Object.hpp"
+
+void clear_registers(Object _registers[4]);
 
 bool is_partial_string(std::string str);
 

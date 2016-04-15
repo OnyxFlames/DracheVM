@@ -33,10 +33,10 @@ RandomNumGen *rng;
 int main(int argc, char* argv[])
 {
 	// Assertions. If any of these fail, the VM isn't guaranteed to run properly.
-	assert(sizeof(char) == sizeof(int8_t));
-	assert(sizeof(short) == sizeof(int16_t));
-	assert(sizeof(int) == sizeof(int32_t));
-	assert(sizeof(long long) == sizeof(int64_t));
+	assert(sizeof(char)		== sizeof(int8_t));
+	assert(sizeof(short)	== sizeof(int16_t));
+	assert(sizeof(int)		== sizeof(int32_t));
+	assert(sizeof(long long)== sizeof(int64_t));
 
 
 	if (argc < 2)
@@ -66,7 +66,7 @@ int main(int argc, char* argv[])
 	Compiler compiler;
 	DracheVM vm;
 	std::shared_ptr<std::stack<Object>> stk_ptr = std::make_shared<std::stack<Object>>(vm.get_stack()); //	Get the pointer of the stack from the instance of the currently running VM. 
-	io = new SystemIO(stk_ptr);		//	This will be used by almost all the soon-to-be implemented static systems.
+	io = new SystemIO(stk_ptr);																			//	This will be used by almost all the soon-to-be implemented static systems.
 	rng = new RandomNumGen(stk_ptr);
 	if (compile_mode)
 		compiler.open(compile_file);

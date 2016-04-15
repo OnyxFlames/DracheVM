@@ -36,12 +36,12 @@ void Compiler::run()
 
 		// If the first two digits are '0' and 'x' then its a hex number.
 		if (buffer[0] == '0' && buffer[1] == 'x') bytecode.push_back(std::stoi(buffer, 0, 16));
-		if (buffer[0] == '.') // label creation.
+		else if (buffer[0] == '.') // label creation.
 		{
 				buffer.erase(buffer.begin());	// remove the '.' and store the label and its position in a map to be looked up later.
 				label_map.insert(std::pair<std::string, int16_t>(buffer, position_count));
 		}
-		if (buffer[0] == '\"')
+		else if (buffer[0] == '\"')
 		{
 			if (is_string(buffer))
 			{

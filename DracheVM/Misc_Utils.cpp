@@ -2,6 +2,13 @@
 
 #include <cctype>
 
+void clear_registers(Object _registers[4])
+{
+	for (int i = 0; i < 3; i++)
+	{
+		_registers[i].i64 = 0x00;
+	}
+}
 
 bool is_partial_string(std::string str)
 {

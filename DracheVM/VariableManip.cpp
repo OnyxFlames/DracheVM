@@ -1,6 +1,8 @@
 #include "VariableManip.hpp"
 #include "Logger.hpp"
 
+#include <cstdlib>
+
 extern Logger logger;
 
 Object object_buffer;

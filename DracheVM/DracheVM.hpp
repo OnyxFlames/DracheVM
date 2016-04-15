@@ -18,7 +18,7 @@ class DracheVM
 {
 private:
 	uint16_t address;		// The address before jump() was called. Used to restore control after loading in constants.
-	Object _register[4] = { 0x00 };
+	Object _register[4] = {};
 	std::stack<Object> stack;
 	std::ifstream file;
 	vm_state state;

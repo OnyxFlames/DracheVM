@@ -35,7 +35,7 @@ private:
 public:
 	RandomNumGen();
 	RandomNumGen(std::shared_ptr<std::stack<Object>> &_stack_ptr);
-	bool RandomNumGen::bind_stack(std::shared_ptr<std::stack<Object>> &_stack_ptr);
+	bool bind_stack(std::shared_ptr<std::stack<Object>> &_stack_ptr);
 	void run_opcode(byte opcode, DracheVM &vm);
 	~RandomNumGen();
 };

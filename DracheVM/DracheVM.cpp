@@ -32,6 +32,9 @@ void DracheVM::open(std::string filelocation)
 
 void DracheVM::run()
 {
+	// Pre-run set up.
+	clear_registers(_register);
+
 	while (!file.eof() && !file.fail())
 	{
 		byte byte_buff[2]{ 0 };
@@ -174,7 +177,6 @@ void DracheVM::run()
 		case GOTO:
 			byte_buff[0] = file.get();
 			byte_buff[1] = file.get();
-			//DEBUG(assemble_16bit_address(byte_buff[0], byte_buff[1]));
 			jump
 				(assemble_16bit_address
 					(byte_buff[0], byte_buff[1]));
