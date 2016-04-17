@@ -1,4 +1,5 @@
-#pragma once
+#ifndef VARIABLEMANIP_HPP
+#define VARIABLEMANIP_HPP
 
 #include "DracheVM.hpp"
 
@@ -33,3 +34,5 @@ void addf64(DracheVM &vm);
 void subf64(DracheVM &vm);
 void mulf64(DracheVM &vm);
 void divf64(DracheVM &vm);
+
+#endif

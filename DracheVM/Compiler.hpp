@@ -1,4 +1,5 @@
-#pragma once
+#ifndef COMPILER_HPP
+#define COMPILER_HPP
 
 #include <string>
 #include <fstream>
@@ -28,3 +29,4 @@ public:
 	~Compiler();
 };
 
+#endif

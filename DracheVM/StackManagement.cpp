@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <cstring>
 
 #define DEBUG(x) std::cout << "DEBUG: " << x << std::endl;
 

@@ -53,7 +53,7 @@ void Compiler::run()
 							break;
 						bytecode.push_back(c);
 					}
-					bytecode.push_back(NULL);
+					bytecode.push_back(0x00);
 					//If it's a proper, clean string, just dump all of it's data into the bytecode omitting the quotation marks.
 				}
 			}

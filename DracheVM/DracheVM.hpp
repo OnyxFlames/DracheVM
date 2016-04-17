@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DRACHEVM_HPP
+#define DRACHEVM_HPP
 
 #include <iostream>
 #include <fstream>
@@ -40,3 +41,4 @@ public:
 	~DracheVM();
 };
 
+#endif

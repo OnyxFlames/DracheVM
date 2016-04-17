@@ -1,4 +1,5 @@
-#pragma once
+#ifndef OPCODES_HPP
+#define OPCODES_HPP
 
 typedef unsigned char byte;
 
@@ -62,6 +63,8 @@ enum Opcodes
 
 	EXIT,
 };
+
+#endif
 
 /*	
 	--Variable Legend--

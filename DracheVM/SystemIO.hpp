@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SYSTEMIO_HPP
+#define SYSTEMIO_HPP
 
 #include <memory>
 #include <stack>
@@ -51,3 +52,4 @@ public:
 	~SystemIO();
 };
 
+#endif

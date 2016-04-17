@@ -40,7 +40,7 @@ bool is_string(std::string str)
 bool is_declared(std::map<std::string, int16_t> &_label_map, std::string _label)
 {
 	// iterate through the map checking for the label.
-	for (std::pair<std::string, int> pair : _label_map) 
+	for (std::pair<std::string, int16_t> pair : _label_map) 
 	{
 		if (pair.first == _label)
 			return true;

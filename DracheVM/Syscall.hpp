@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SYSCALL_HPP
+#define SYSCALL_HPP
 
 #include "Opcodes.hpp"
 #include "DracheVM.hpp"
@@ -15,3 +16,5 @@ extern SystemIO *io;
 extern RandomNumGen *rng;
 
 void syscall(byte system, byte code, DracheVM &vm);
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RANDOMNUMGEN_HPP
+#define RANDOMNUMGEN_HPP
 
 #include <memory>
 #include <stack>
@@ -40,3 +41,4 @@ public:
 	~RandomNumGen();
 };
 
+#endif

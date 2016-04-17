@@ -1,4 +1,5 @@
-#pragma once
+#ifndef OBJECT_HPP
+#define OBJECT_HPP
 #include <cstdint>
 
 union Object
@@ -12,3 +13,5 @@ union Object
 	double	f64;
 
 };
+
+#endif
