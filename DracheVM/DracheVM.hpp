@@ -8,6 +8,7 @@
 #include "Object.hpp"
 #include "Logger.hpp"
 
+
 struct vm_state
 {
 	bool is_open = false;

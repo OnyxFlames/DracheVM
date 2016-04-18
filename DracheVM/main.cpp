@@ -9,7 +9,6 @@
 #include "SystemIO.hpp"
 #include "RandomNumGen.hpp"
 
-
 //#define NDEBUG
 #include <cassert>
 

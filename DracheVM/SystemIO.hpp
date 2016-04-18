@@ -28,7 +28,8 @@ enum IO_OPCODES
 	PRINTINT16,
 	PRINTINT32,
 	PRINTINT64,
-
+	PRINTF32,
+	PRINTF64,
 
 	// Read the value from stdin and push it onto the stack.
 	READSTR,

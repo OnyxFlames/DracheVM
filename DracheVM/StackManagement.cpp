@@ -18,7 +18,7 @@ void push_to_stack(DracheVM &vm)
 	byte variable_size = vm.next();
 	if (variable_size == 1)	//char*
 	{
-		// Load a null-terminated(C-string) into a vector
+		/*// Load a null-terminated(C-string) into a vector
 		std::vector<char> byte_buff;
 		// Unfortunately we need to have this buffer to be a vector of char's instead of actual byte's so that str_buff doesn't complain.
 		byte buff = vm.next();
@@ -31,11 +31,10 @@ void push_to_stack(DracheVM &vm)
 		byte_buff.push_back(0x00);
 		// Create the string buffer and populate it with byte_buff's content.
 		std::string str_buff(byte_buff.data(), byte_buff.size());
-		// Copy the contents of the str_buff(as a char*) onto the object buffer and push the object buffer onto the vm's stack.
-		//DEBUG("About to copy string contents..")
+		// Copy the contents of the str_buff(as a char*) onto the object buffer and push the object buffer onto the vm's stack.*/
 		std::strcpy(object_buffer.str,
-					str_buff.c_str());
-		//DEBUG(object_buffer.str)
+								from_c_str(vm)	// This reads bytes until it reaches a null byte, casts it into a byte array, then puts that byte array into a std::string. Returns said string.
+											.c_str());
 		vm.get_stack().push(object_buffer);
 	}
 	else if (variable_size == 2)
@@ -80,10 +79,19 @@ void push_to_stack(DracheVM &vm)
 		object_buffer.i64 = buffer;
 		vm.get_stack().push(object_buffer);
 	}
-	else if (variable_size == 6 || variable_size == 7)
+	else if (variable_size == 6)
 	{
-		std::cerr << "vm error: floating point literals are yet to be supported. Exiting." << std::endl;
-		std::exit(-1);
+		// Floating point literals are going to be loaded similar to C-strings, except they will be casted into either a float or a double afterwards.
+		// This is due to how floating point values are stored in memory as fractions, making loading them byte by byte rather difficult.
+		// For documentation on what this execution branch is doing refer the from_c_str(DracheVM &vm) function in Misc_Utils.cpp
+
+		object_buffer.f32 = atof(from_c_str(vm).c_str());
+		vm.get_stack().push(object_buffer);
+	}
+	else if (variable_size == 7)
+	{
+		object_buffer.f64 = atof(from_c_str(vm).c_str());
+		vm.get_stack().push(object_buffer);
 	}
 	else
 	{

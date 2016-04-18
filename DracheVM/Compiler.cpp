@@ -36,6 +36,13 @@ void Compiler::run()
 
 		// If the first two digits are '0' and 'x' then its a hex number.
 		if (buffer[0] == '0' && buffer[1] == 'x') bytecode.push_back(std::stoi(buffer, 0, 16));
+		else if (isdigit(buffer[0]))
+		{
+			// If the character starts as a number but the second number isnt a 'x' (so it isnt a byte literal)
+			for (char c : buffer)
+				bytecode.push_back(c);
+			bytecode.push_back(0x00);
+		}
 		else if (buffer[0] == '.') // label creation.
 		{
 				buffer.erase(buffer.begin());	// remove the '.' and store the label and its position in a map to be looked up later.
@@ -107,6 +114,8 @@ void Compiler::run()
 		else if (buffer == "IO_PRINTINT16") bytecode.push_back(PRINTINT16);
 		else if (buffer == "IO_PRINTINT32") bytecode.push_back(PRINTINT32);
 		else if (buffer == "IO_PRINTINT64") bytecode.push_back(PRINTINT64);
+		else if (buffer == "IO_PRINTF32") bytecode.push_back(PRINTF32);
+		else if (buffer == "IO_PRINTF64") bytecode.push_back(PRINTF64);
 		else if (buffer == "IO_READSTR") bytecode.push_back(READSTR);
 		else if (buffer == "IO_READCHR") bytecode.push_back(READCHR);
 		else if (buffer == "IO_READINT8") bytecode.push_back(READINT8);

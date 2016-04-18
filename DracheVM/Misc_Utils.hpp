@@ -5,8 +5,12 @@
 #include <string>
 #include <map>
 #include <array>
+#include <vector>
 
+#include "DracheVM.hpp"
 #include "Object.hpp"
+#include "Opcodes.hpp"
+
 
 void clear_registers(Object _registers[4]);
 
@@ -17,6 +21,8 @@ bool is_clean_string(std::string str);
 bool is_string(std::string str);
 
 bool is_declared(std::map<std::string, int16_t> &_label_map, std::string _label);
+
+std::string from_c_str(DracheVM &vm);
 
 uint16_t assemble_16bit_address(uint8_t first, uint8_t second);
 

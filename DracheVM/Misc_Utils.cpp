@@ -50,6 +50,23 @@ bool is_declared(std::map<std::string, int16_t> &_label_map, std::string _label)
 	return false;
 }
 
+std::string from_c_str(DracheVM &vm)
+{
+	std::vector<char> byte_buff;
+	// Unfortunately we need to have this buffer to be a vector of char's instead of actual byte's so that str_buff doesn't complain.
+	byte buff = vm.next();
+	while (buff != '\0')
+	{
+		byte_buff.push_back(buff);
+		buff = vm.next();
+	}
+	// After reaching the terminater, append the '\0'.
+	byte_buff.push_back(0x00);
+	// Create the string buffer and populate it with byte_buff's content.
+	std::string str_buff(byte_buff.data(), byte_buff.size());
+	return str_buff;
+}
+
 uint16_t assemble_16bit_address(uint8_t first, uint8_t second)
 {
 	uint16_t ret = first;

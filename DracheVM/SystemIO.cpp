@@ -64,6 +64,14 @@ void SystemIO::run_opcode(byte opcode, DracheVM &vm)
 		printf("%ld", (long)vm.get_stack().top().i64);
 		vm.get_stack().pop();
 		break;
+	case PRINTF32:
+		printf("%f", vm.get_stack().top().f32);
+		vm.get_stack().pop();
+		break;
+	case PRINTF64:
+		printf("%f", vm.get_stack().top().f64);
+		vm.get_stack().pop();
+		break;
 	case READCHR:
 		// Note: Add the allocation for a character on the stack next time you work on this.
 		scanf("%c", obj_buff.str);

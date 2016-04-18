@@ -6,6 +6,7 @@
 
 #include "Object.hpp"
 #include "DracheVM.hpp"
+#include "Misc_Utils.hpp"
 
 void push_to_stack(DracheVM &vm);
 
