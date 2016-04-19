@@ -27,6 +27,8 @@ void DracheVM::open(std::string filelocation)
 		std::exit(-1);
 	}
 	state.is_open = true;
+	if (get_rom_size() <= 1000)
+		load_into_memory();
 	run();
 }
 
@@ -307,6 +309,28 @@ DracheVM* DracheVM::get_vm()
 		This will be used to clone VM's.
 	*/
 	return this;
+}
+
+size_t DracheVM::get_rom_size()
+{
+	size_t ret = 0;
+	file.seekg(std::ios::end);
+	ret = file.tellg();
+	file.seekg(std::ios::beg);
+	return ret;
+}
+
+void DracheVM::load_into_memory()
+{
+	size_t rom_size = get_rom_size();
+	for (int i = 0; i < rom_size; i++)
+	{
+		ROM[i] = file.get();
+	}
+	// Safe-measure to make sure that if the rom jumps to the wrong part in memory that it will reach an exit call.
+	for (size_t i = rom_size; i <= 1000; i++)
+		ROM[i] = EXIT;
+	in_memory = true;
 }
 
 DracheVM::~DracheVM()
