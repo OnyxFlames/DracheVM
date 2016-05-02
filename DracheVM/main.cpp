@@ -2,6 +2,7 @@
 #include <fstream>
 #include <cstring>
 #include <string>
+#include <chrono>
 
 #include "Compiler.hpp"
 #include "DracheVM.hpp"
@@ -15,10 +16,13 @@
 
 Logger logger("output.log");
 
+bool time_performence = false;
 bool compile_mode = false;
 bool run_mode = false;
 std::string compile_file;
 std::string run_file;
+
+std::chrono::time_point<std::chrono::system_clock> pre, post;
 
 void print_help(std::string prog_name);
 
@@ -60,6 +64,11 @@ int main(int argc, char* argv[])
 			compile_mode = true;
 			compile_file = argv[++i];
 		}
+		else if (std::strcmp(argv[i], "-time") == 0)
+		{
+			time_performence = true;
+			std::cout << "Debug: testing performence..\n";
+		}
 	}
 
 	Compiler compiler;
@@ -70,8 +79,18 @@ int main(int argc, char* argv[])
 	if (compile_mode)
 		compiler.open(compile_file);
 	if (run_mode)
+	{
+		if (time_performence)
+			pre = std::chrono::system_clock::now();
 		vm.open(run_file);
+	}
 
+	if (time_performence) 
+	{
+		post = std::chrono::system_clock::now();
+		std::chrono::duration<long double> delta = (post - pre);
+		std::cout << "\n\nEstimated run time: " << delta.count() << " seconds.\n";
+	}
 	return 0;
 }
 

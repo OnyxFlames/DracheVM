@@ -94,30 +94,12 @@ void DracheVM::run()
 			stack.push(buffer[0]);
 			stack.push(buffer[1]);
 			break;
-		case ADD8:
-		case SUB8:
-		case MUL8:
-		case DIV8:
-		case ADD16:
-		case SUB16:
-		case MUL16:
-		case DIV16:
-		case ADD32:
-		case SUB32:
-		case MUL32:
-		case DIV32:
-		case ADD64:
-		case SUB64:
-		case MUL64:
-		case DIV64:
-		case ADDF32:
-		case SUBF32:
-		case MULF32:
-		case DIVF32:
-		case ADDF64:
-		case SUBF64:
-		case MULF64:
-		case DIVF64:
+		case ADD8: case SUB8: case MUL8: case DIV8:
+		case ADD16: case SUB16: case MUL16: case DIV16:
+		case ADD32: case SUB32: case MUL32: case DIV32:
+		case ADD64: case SUB64: case MUL64: case DIV64:
+		case ADDF32: case SUBF32: case MULF32: case DIVF32:
+		case ADDF64: case SUBF64: case MULF64: case DIVF64:
 			variable_handler(val, *this);
 			break;
 		case SYSCALL:
@@ -244,7 +226,8 @@ vm_state DracheVM::get_state()
 void DracheVM::vm_exit()
 {
 	//stack_dump();
-	std::exit(1);
+	//std::exit(1);
+	state.is_open = false;
 }
 void DracheVM::stack_dump()
 {
