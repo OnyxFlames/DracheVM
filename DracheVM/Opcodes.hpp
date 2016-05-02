@@ -59,12 +59,6 @@ enum Opcodes
 			// Pop the top value of the stack and treat it like an address for goto.
 			// This opcode is for when the data in the rom exceeds (2^16) - 32 bytes, or 65,504 bytes(65.5 Kb)
 	GOTOASADDR,
-	/* TODO: Remove these opcodes once it no longer breaks the build.
-			// Pop(n) pops the top of the stack onto the nth register. Cannot be manipulated this way - only overwritten.
-	// POP1, POP2, POP3, POP4,
-			// Push(n) pushes the value in the register onto the top of the stack. Defaults to 0x00.
-	// PUSH1, PUSH2, PUSH3, PUSH4,
-	*/
 
 	SYSCALL,
 

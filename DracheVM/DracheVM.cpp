@@ -80,30 +80,6 @@ void DracheVM::run()
 				logger.elog("vm error: invalid MOV operation! Skipping..");
 			}
 			break;
-		/*case POP1:
-			pop_to_register(0x01, *this);
-			break;
-		case POP2:
-			pop_to_register(0x02, *this);
-			break;
-		case POP3:
-			pop_to_register(0x03, *this);
-			break;
-		case POP4:
-			pop_to_register(0x04, *this);
-			break;
-		case PUSH1:
-			push_from_register(0x01, *this);
-			break;
-		case PUSH2:
-			push_from_register(0x02, *this);
-			break;
-		case PUSH3:
-			push_from_register(0x03, *this);
-			break;
-		case PUSH4:
-			push_from_register(0x04, *this);
-			break;*/
 		case ROT:
 			if (stack.size() < 2)
 			{
