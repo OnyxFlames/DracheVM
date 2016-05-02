@@ -20,11 +20,11 @@ struct vm_state
 class DracheVM
 {
 private:
-	static constexpr int max_rom_size = 1000 * 1;	// Max size(in bytes) that the VM can store in memory for the ROM.
-	uint32_t index = 0x00;							// If the ROM is loaded into memory, this variable will be used, otherwise use the file streams pointer.
+	static constexpr uint32_t max_rom_size = _kilobyte;	// Max size(in bytes) that the VM can store in memory for the ROM.
+	uint16_t index = 0x00;								// If the ROM is loaded into memory, this variable will be used, otherwise use the file streams pointer.
 	bool in_memory = false;
-	std::array<byte, max_rom_size> ROM{ NOP };		// If the physical ROM is 1000 bytes or less, load it into memory and read it off there.
-	uint16_t address;								// The address before jump() was called. Used to restore control after loading in constants.
+	std::array<byte, max_rom_size> ROM{ NOP };			// If the physical ROM is max_rom_size bytes or less, load it into memory and read it off there.
+	uint16_t address;									// The address before jump() was called. Used to restore control after loading in constants.
 	Object _register[4] = {};
 	std::stack<Object> stack;
 	std::ifstream file;
