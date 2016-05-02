@@ -50,6 +50,11 @@ bool is_declared(std::map<std::string, int16_t> &_label_map, std::string _label)
 	return false;
 }
 
+bool in_range(int64_t min, int64_t max, int64_t val)
+{
+	return (val >= min && val <= max);
+}
+
 std::string from_c_str(DracheVM &vm)
 {
 	std::vector<char> byte_buff;

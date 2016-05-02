@@ -14,4 +14,6 @@ void pop_to_register(uint8_t register_index, DracheVM &vm);
 
 void push_from_register(uint8_t register_index, DracheVM &vm);
 
+void move_to_register(uint8_t register_from, uint8_t register_to, DracheVM &vm);
+
 #endif

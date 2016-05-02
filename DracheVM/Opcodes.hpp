@@ -11,7 +11,7 @@ enum Opcodes
 	POP,	// Pop removes the top object off of the stack.
 	DEALLOC,// Deallocated the top value on the stack. The typically is called right before the value is popped off the stack.
 	ROT,	// Rot pops the first two objects into temporary buffers, then pushes the first, then second objects back onto the stack - swapping them.
-
+	MOV,	// Replaces POPN/PUSHN functions. Moves from stack to register or register to stack. Syntax: MOV 0x00 0x01 moves stack contents to register 1.
 
 			// These opcodes manipulate n amount of bits of the objects in the stack, pushing the result(s) onto the stack.
 	ADD8, SUB8, MUL8, DIV8,

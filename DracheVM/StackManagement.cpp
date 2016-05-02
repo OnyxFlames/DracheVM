@@ -85,7 +85,7 @@ void push_to_stack(DracheVM &vm)
 		// This is due to how floating point values are stored in memory as fractions, making loading them byte by byte rather difficult.
 		// For documentation on what this execution branch is doing refer the from_c_str(DracheVM &vm) function in Misc_Utils.cpp
 
-		object_buffer.f32 = atof(from_c_str(vm).c_str());
+		object_buffer.f32 = (float)atof(from_c_str(vm).c_str());
 		vm.get_stack().push(object_buffer);
 	}
 	else if (variable_size == 7)
@@ -120,4 +120,14 @@ void push_from_register(uint8_t register_index, DracheVM &vm)
 	register_index--; // Registers are passed 1-based. Decrement to get the actual register.
 	vm.get_stack().push(vm.get_register(register_index));
 	vm.get_register(register_index).i64 = 0; // Clear the register after adding its value back onto the stack.
+}
+
+void move_to_register(uint8_t register_from, uint8_t register_to, DracheVM &vm)
+{
+	// Decrement registers for actual values.
+	register_from--;
+	register_to--;
+	// Move the data from the FROM register to the TO register.
+	vm.get_register(register_to).i64 = vm.get_register(register_from).i64;
+	vm.get_register(register_from).i64 = 0x00;	// Clear the FROM registers contents.
 }

@@ -1,5 +1,4 @@
 #include "DracheVM.hpp"
-#include "Opcodes.hpp"
 #include "StackManagement.hpp"
 #include "VariableManip.hpp"
 #include "Syscall.hpp"
@@ -60,6 +59,25 @@ void DracheVM::run()
 				break;
 			}
 			stack.pop();
+			break;
+		case MOV:
+			byte_buff[0] = file.get();
+			byte_buff[1] = file.get();
+			if (in_range(0x00, 0x04, (int64_t)byte_buff[0]))
+			{
+				if (byte_buff[0] == 0x00 && in_range(0x01, 0x04, byte_buff[1]))	// if the mov is FROM the stack TO a register.
+					pop_to_register(byte_buff[1], *this);
+
+				if (in_range(0x01, 0x04, byte_buff[0]) && byte_buff[1] == 0x00)
+					push_from_register(byte_buff[0], *this);
+
+				if (in_range(0x01, 0x04, byte_buff[0]) && in_range(0x01, 0x04, byte_buff[1]))
+					move_to_register(byte_buff[0], byte_buff[1], *this);
+			}
+			else
+			{
+				logger.elog("vm error: invalid MOV operation! Skipping..");
+			}
 			break;
 		case POP1:
 			pop_to_register(0x01, *this);
@@ -315,7 +333,7 @@ size_t DracheVM::get_rom_size()
 {
 	size_t ret = 0;
 	file.seekg(std::ios::end);
-	ret = file.tellg();
+	ret = (size_t)file.tellg();
 	file.seekg(std::ios::beg);
 	return ret;
 }
@@ -323,7 +341,7 @@ size_t DracheVM::get_rom_size()
 void DracheVM::load_into_memory()
 {
 	size_t rom_size = get_rom_size();
-	for (int i = 0; i < rom_size; i++)
+	for (unsigned i = 0; i < rom_size; i++)
 	{
 		ROM[i] = file.get();
 	}
