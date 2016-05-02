@@ -72,14 +72,14 @@ void Compiler::run()
 		else if (buffer == "PUSH") bytecode.push_back(PUSH);
 		else if (buffer == "POP")  bytecode.push_back(POP);
 		else if (buffer == "ROT")  bytecode.push_back(ROT);
-		else if (buffer == "POP1") bytecode.push_back(POP1);
+		/*else if (buffer == "POP1") bytecode.push_back(POP1);
 		else if (buffer == "POP2") bytecode.push_back(POP2);
 		else if (buffer == "POP3") bytecode.push_back(POP3);
 		else if (buffer == "POP4") bytecode.push_back(POP4);
 		else if (buffer == "PUSH1") bytecode.push_back(PUSH1);
 		else if (buffer == "PUSH2") bytecode.push_back(PUSH2);
 		else if (buffer == "PUSH3") bytecode.push_back(PUSH3);
-		else if (buffer == "PUSH4") bytecode.push_back(PUSH4);
+		else if (buffer == "PUSH4") bytecode.push_back(PUSH4);*/
 		else if (buffer == "ADD8") bytecode.push_back(ADD8);
 		else if (buffer == "SUB8") bytecode.push_back(SUB8);
 		else if (buffer == "MUL8") bytecode.push_back(MUL8);

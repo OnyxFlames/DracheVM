@@ -26,7 +26,7 @@ void DracheVM::open(std::string filelocation)
 		std::exit(-1);
 	}
 	state.is_open = true;
-	if (get_rom_size() <= 1000)
+	if (get_rom_size() < 1000)
 		load_into_memory();
 	run();
 }
@@ -79,7 +79,7 @@ void DracheVM::run()
 				logger.elog("vm error: invalid MOV operation! Skipping..");
 			}
 			break;
-		case POP1:
+		/*case POP1:
 			pop_to_register(0x01, *this);
 			break;
 		case POP2:
@@ -102,7 +102,7 @@ void DracheVM::run()
 			break;
 		case PUSH4:
 			push_from_register(0x04, *this);
-			break;
+			break;*/
 		case ROT:
 			if (stack.size() < 2)
 			{
@@ -346,7 +346,7 @@ void DracheVM::load_into_memory()
 		ROM[i] = file.get();
 	}
 	// Safe-measure to make sure that if the rom jumps to the wrong part in memory that it will reach an exit call.
-	for (size_t i = rom_size; i <= 1000; i++)
+	for (size_t i = rom_size; i < 1000; i++)
 		ROM[i] = EXIT;
 	in_memory = true;
 }

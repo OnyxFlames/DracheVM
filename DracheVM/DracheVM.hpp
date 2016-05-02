@@ -21,8 +21,8 @@ class DracheVM
 {
 private:
 	bool in_memory = false;
-	std::array<byte, 1000> ROM;			// If the physical ROM is 1000 bytes or less, load it into memory and read it off their.
-	uint16_t address;		// The address before jump() was called. Used to restore control after loading in constants.
+	std::array<byte, 1000> ROM{ EXIT };		// If the physical ROM is 1000 bytes or less, load it into memory and read it off their.
+	uint16_t address;				// The address before jump() was called. Used to restore control after loading in constants.
 	Object _register[4] = {};
 	std::stack<Object> stack;
 	std::ifstream file;
