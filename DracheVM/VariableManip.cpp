@@ -11,7 +11,7 @@ void add8(DracheVM &vm)
 {
 	if (vm.get_stack().size() < 2)
 	{
-		logger.elog("vm error: attempted to pop from an empty stack! Exiting.");
+		logger.elog("vm error: attempted to pop from an empty stack! Exiting. (OPCODE ADD8)");
 		std::exit(-1);
 	}
 	int8_t buff[2] = { 0x00 };
@@ -26,7 +26,7 @@ void sub8(DracheVM &vm)
 {
 	if (vm.get_stack().size() < 2)
 	{
-		logger.elog("vm error: attempted to pop from an empty stack! Exiting.");
+		logger.elog("vm error: attempted to pop from an empty stack! Exiting. (OPCODE SUB8)");
 		std::exit(-1);
 	}
 	int8_t buff[2] = { 0x00 };
@@ -41,7 +41,7 @@ void mul8(DracheVM &vm)
 {
 	if (vm.get_stack().size() < 2)
 	{
-		logger.elog("vm error: attempted to pop from an empty stack! Exiting.");
+		logger.elog("vm error: attempted to pop from an empty stack! Exiting. (OPCODE MUL8)");
 		std::exit(-1);
 	}
 	int8_t buff[2] = { 0x00 };
@@ -56,7 +56,7 @@ void div8(DracheVM &vm)
 {
 	if (vm.get_stack().size() < 2)
 	{
-		logger.elog("vm error: attempted to pop from an empty stack! Exiting.");
+		logger.elog("vm error: attempted to pop from an empty stack! Exiting. (OPCODE DIV8)");
 		std::exit(-1);
 	}
 	int8_t buff[2] = { 0x00 };
@@ -72,7 +72,7 @@ void add16(DracheVM &vm)
 {
 	if (vm.get_stack().size() < 2)
 	{
-		logger.elog("vm error: attempted to pop from an empty stack! Exiting.");
+		logger.elog("vm error: attempted to pop from an empty stack! Exiting. (OPCODE ADD16)");
 		std::exit(-1);
 	}
 	int16_t buff[2] = { 0x00 };
@@ -87,7 +87,7 @@ void sub16(DracheVM &vm)
 {
 	if (vm.get_stack().size() < 2)
 	{
-		logger.elog("vm error: attempted to pop from an empty stack! Exiting.");
+		logger.elog("vm error: attempted to pop from an empty stack! Exiting. (OPCODE SUB16");
 		std::exit(-1);
 	}
 	int16_t buff[2] = { 0x00 };
@@ -102,7 +102,7 @@ void mul16(DracheVM &vm)
 {
 	if (vm.get_stack().size() < 2)
 	{
-		logger.elog("vm error: attempted to pop from an empty stack! Exiting.");
+		logger.elog("vm error: attempted to pop from an empty stack! Exiting. (OPCODE MUL16)");
 		std::exit(-1);
 	}
 	int16_t buff[2] = { 0x00 };
@@ -117,7 +117,7 @@ void div16(DracheVM &vm)
 {
 	if (vm.get_stack().size() < 2)
 	{
-		logger.elog("vm error: attempted to pop from an empty stack! Exiting.");
+		logger.elog("vm error: attempted to pop from an empty stack! Exiting. (OPCODE DIV16)");
 		std::exit(-1);
 	}
 	int16_t buff[2] = { 0x00 };
@@ -133,7 +133,7 @@ void add32(DracheVM &vm)
 {
 	if (vm.get_stack().size() < 2)
 	{
-		logger.elog("vm error: attempted to pop from an empty stack! Exiting.");
+		logger.elog("vm error: attempted to pop from an empty stack! Exiting. (OPCODE ADD32)");
 		std::exit(-1);
 	}
 	int32_t buff[2] = { 0x00 };
@@ -148,7 +148,7 @@ void sub32(DracheVM &vm)
 {
 	if (vm.get_stack().size() < 2)
 	{
-		logger.elog("vm error: attempted to pop from an empty stack! Exiting.");
+		logger.elog("vm error: attempted to pop from an empty stack! Exiting. (OPCODE SUB32)");
 		std::exit(-1);
 	}
 	int32_t buff[2] = { 0x00 };
@@ -163,7 +163,7 @@ void mul32(DracheVM &vm)
 {
 	if (vm.get_stack().size() < 2)
 	{
-		logger.elog("vm error: attempted to pop from an empty stack! Exiting.");
+		logger.elog("vm error: attempted to pop from an empty stack! Exiting. (OPCODE MUL32)");
 		std::exit(-1);
 	}
 	int32_t buff[2] = { 0x00 };
@@ -178,7 +178,7 @@ void div32(DracheVM &vm)
 {
 	if (vm.get_stack().size() < 2)
 	{
-		logger.elog("vm error: attempted to pop from an empty stack! Exiting.");
+		logger.elog("vm error: attempted to pop from an empty stack! Exiting. (OPCODE DIV32)");
 		std::exit(-1);
 	}
 	int32_t buff[2] = { 0x00 };
@@ -194,7 +194,7 @@ void add64(DracheVM &vm)
 {
 	if (vm.get_stack().size() < 2)
 	{
-		logger.elog("vm error: attempted to pop from an empty stack! Exiting.");
+		logger.elog("vm error: attempted to pop from an empty stack! Exiting. (OPCODE ADD64)");
 		std::exit(-1);
 	}
 	int64_t buff[2] = { 0x00 };
@@ -209,7 +209,7 @@ void sub64(DracheVM &vm)
 {
 	if (vm.get_stack().size() < 2)
 	{
-		logger.elog("vm error: attempted to pop from an empty stack! Exiting.");
+		logger.elog("vm error: attempted to pop from an empty stack! Exiting. (OPCODE SUB64)");
 		std::exit(-1);
 	}
 	int64_t buff[2] = { 0x00 };
@@ -224,7 +224,7 @@ void mul64(DracheVM &vm)
 {
 	if (vm.get_stack().size() < 2)
 	{
-		logger.elog("vm error: attempted to pop from an empty stack! Exiting.");
+		logger.elog("vm error: attempted to pop from an empty stack! Exiting. (OPCODE MUL64)");
 		std::exit(-1);
 	}
 	int64_t buff[2] = { 0x00 };
@@ -239,7 +239,7 @@ void div64(DracheVM &vm)
 {
 	if (vm.get_stack().size() < 2)
 	{
-		logger.elog("vm error: attempted to pop from an empty stack! Exiting.");
+		logger.elog("vm error: attempted to pop from an empty stack! Exiting. (OPCODE DIV64)");
 		std::exit(-1);
 	}
 	int64_t buff[2] = { 0x00 };

@@ -26,8 +26,8 @@ void DracheVM::open(std::string filelocation)
 		std::exit(-1);
 	}
 	state.is_open = true;
-	if (get_rom_size() < 1000)
-		load_into_memory();
+	if (get_rom_size() < max_rom_size)	// Modify DracheVM::run() to return bytes from either memory or the ROM. Prioritize memory as it is faster.
+		load_into_memory();		// This will be added once returning from memory vs returning from actual file have the same results(it's buggy at the moment)
 	run();
 }
 
@@ -36,12 +36,13 @@ void DracheVM::run()
 	// Pre-run set up.
 	clear_registers(_register);
 
-	while (!file.eof() && !file.fail())
+	while (state.is_open)	// TODO: Have opcodes aware of the VM's state. eg. if it hits an exit make sure to change it to state.is_open = false;
 	{
 		byte byte_buff[2]{ 0 };
 		Object object_buffer; 
 		object_buffer.i64 = 0;	// Clear the buffer to 0. This is to guarantee that when pushing values smaller than 64 bits onto the stack, they aren't corrupted with garbage data.
-		switch (file.get())
+		int temp = next();
+		switch (temp)
 		{
 		case NOP:
 			// Do nothing.
@@ -61,8 +62,8 @@ void DracheVM::run()
 			stack.pop();
 			break;
 		case MOV:
-			byte_buff[0] = file.get();
-			byte_buff[1] = file.get();
+			byte_buff[0] = next();
+			byte_buff[1] = next();
 			if (in_range(0x00, 0x04, (int64_t)byte_buff[0]))
 			{
 				if (byte_buff[0] == 0x00 && in_range(0x01, 0x04, byte_buff[1]))	// if the mov is FROM the stack TO a register.
@@ -190,13 +191,13 @@ void DracheVM::run()
 			divf64(*this);
 			break;
 		case SYSCALL:
-			byte_buff[0] = file.get();
-			byte_buff[1] = file.get();
+			byte_buff[0] = next();
+			byte_buff[1] = next();
 			syscall(byte_buff[0], byte_buff[1], *this);
 			break;
 		case GOTO:
-			byte_buff[0] = file.get();
-			byte_buff[1] = file.get();
+			byte_buff[0] = next();
+			byte_buff[1] = next();
 			jump
 				(assemble_16bit_address
 					(byte_buff[0], byte_buff[1]));
@@ -208,8 +209,8 @@ void DracheVM::run()
 			if (object_buffer.i64 == stack.top().i64)
 			{
 				stack.pop();
-				byte_buff[0] = file.get();
-				byte_buff[1] = file.get();
+				byte_buff[0] = next();
+				byte_buff[1] = next();
 				jump
 					(assemble_16bit_address
 						(byte_buff[0], byte_buff[1]));
@@ -221,6 +222,7 @@ void DracheVM::run()
 			}
 			break;
 		case EXIT:
+			// equivalent to state.is_open = false;
 			vm_exit();
 			break;
 		default:
@@ -244,14 +246,20 @@ std::stack<Object> &DracheVM::get_stack()
 	return stack;
 }
 
-int DracheVM::next()
+inline int DracheVM::next()
 {
-	return file.get();
+	if (in_memory)
+		return ROM[index++];
+	else
+		return file.get();
 }
 
 void DracheVM::rel_jump(int32_t jump_distance)
 {
-	file.seekg(file.tellg() + (std::streampos)jump_distance);
+	if (in_memory)
+		index = index + jump_distance;
+	else
+		file.seekg(file.tellg() + (std::streampos)jump_distance);
 }
 
 void DracheVM::jump(int32_t jump_address)	// Have the VM's pointer jump to a different part of the ROM.
@@ -259,38 +267,53 @@ void DracheVM::jump(int32_t jump_address)	// Have the VM's pointer jump to a dif
 {											// The jump_address defaults to -1, if it is still -1 when the function is called it reads the next two bytes. Otherwise it goes to that address.
 	if (jump_address == -1)
 	{
-
-		address = (uint16_t)file.tellg();
+		if (in_memory)
+			address = index;
+		else
+			address = (uint16_t)file.tellg();
 		
 		uint16_t _jump_address = 0;
 
-		_jump_address += file.get();
+		_jump_address += (byte)next();
 		_jump_address <<= 8;
-		_jump_address += file.get();
-
-		file.seekg(_jump_address);
+		_jump_address += (byte)next();
+		
+		if (in_memory)
+			index = _jump_address;
+		else
+			file.seekg(_jump_address);
 	}
 	else
 	{
-		file.seekg(jump_address);
+		if (in_memory)
+			index = jump_address;
+		else
+			file.seekg(jump_address);
 	}
 }
 
 void DracheVM::restore()
 {
-	file.seekg(address);
+	if (in_memory)
+		index = address;
+	else
+		file.seekg(address);
+
 	address = 0x0000;
 }
 
 vm_state DracheVM::get_state()
 {
-	state.current_position = (uint32_t)file.tellg();	// Update the state before returning it.
+	if (in_memory)
+		state.current_position = index;
+	else
+		state.current_position = (uint32_t)file.tellg();	// Update the state before returning it.
 	return state;
 }
 
 void DracheVM::vm_exit()
 {
-	//stack_dump();
+	stack_dump();
 	std::exit(1);
 }
 void DracheVM::stack_dump()
@@ -309,7 +332,7 @@ void DracheVM::stack_dump()
 		stack.pop();
 	}
 
-	logger.log("Exit called. Closing VM");
+	logger.log("Exit called. Closing VM.");
 	file.close();
 	state.is_open = false;
 	state.current_position = 0x00000000;
@@ -318,6 +341,15 @@ void DracheVM::stack_dump()
 	while (!stack.empty())
 		stack.pop();
 
+	if (in_memory)
+	{
+		std::cout << "\nDumping internal ROM state to DUMP.dvm!\n";
+		std::ofstream dump("DUMP.dvm");
+		if (!dump.is_open())
+			logger.elog("stack dump error: unable to dump internal ROM state to DUMP.dvm... something has gone horribly wrong.\n");
+		for (uint32_t dump_iter = 0; dump_iter < max_rom_size; dump_iter++)
+			dump << ROM[dump_iter];
+	}
 }
 
 DracheVM* DracheVM::get_vm()
@@ -332,9 +364,10 @@ DracheVM* DracheVM::get_vm()
 size_t DracheVM::get_rom_size()
 {
 	size_t ret = 0;
-	file.seekg(std::ios::end);
+	file.seekg(0, std::ios::end);
+  //file.seekg(std::ios::end);	The above version of the function returns the rom size much more accurately by including the file offset(defaults at 0).
 	ret = (size_t)file.tellg();
-	file.seekg(std::ios::beg);
+	file.seekg(0, std::ios::beg);
 	return ret;
 }
 
@@ -346,8 +379,8 @@ void DracheVM::load_into_memory()
 		ROM[i] = file.get();
 	}
 	// Safe-measure to make sure that if the rom jumps to the wrong part in memory that it will reach an exit call.
-	for (size_t i = rom_size; i < 1000; i++)
-		ROM[i] = EXIT;
+	for (size_t i = rom_size; i < max_rom_size; i++)
+		ROM[i] = NOP;
 	in_memory = true;
 }
 
