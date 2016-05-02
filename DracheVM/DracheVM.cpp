@@ -64,15 +64,15 @@ void DracheVM::run()
 		case MOV:
 			byte_buff[0] = next();
 			byte_buff[1] = next();
-			if (in_range(0x00, 0x04, (int64_t)byte_buff[0]))
+			if (is_in_range(0x00, 0x04, (int64_t)byte_buff[0]))
 			{
-				if (byte_buff[0] == 0x00 && in_range(0x01, 0x04, byte_buff[1]))	// if the mov is FROM the stack TO a register.
+				if (byte_buff[0] == 0x00 && is_in_range(0x01, 0x04, byte_buff[1]))	// if the mov is FROM the stack TO a register.
 					pop_to_register(byte_buff[1], *this);
 
-				if (in_range(0x01, 0x04, byte_buff[0]) && byte_buff[1] == 0x00)
+				if (is_in_range(0x01, 0x04, byte_buff[0]) && byte_buff[1] == 0x00)
 					push_from_register(byte_buff[0], *this);
 
-				if (in_range(0x01, 0x04, byte_buff[0]) && in_range(0x01, 0x04, byte_buff[1]))
+				if (is_in_range(0x01, 0x04, byte_buff[0]) && is_in_range(0x01, 0x04, byte_buff[1]))
 					move_to_register(byte_buff[0], byte_buff[1], *this);
 			}
 			else

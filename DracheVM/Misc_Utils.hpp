@@ -22,7 +22,7 @@ bool is_string(std::string str);
 
 bool is_declared(std::map<std::string, int16_t> &_label_map, std::string _label);
 
-bool in_range(int64_t min, int64_t max, int64_t val);
+bool is_in_range(int64_t min, int64_t max, int64_t val);
 
 std::string from_c_str(DracheVM &vm);
 

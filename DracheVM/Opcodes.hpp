@@ -1,13 +1,15 @@
 #ifndef OPCODES_HPP
 #define OPCODES_HPP
 
+#include <cstdint>
+
 typedef unsigned char byte;
 
 constexpr uint8_t _byte = 1;
 constexpr uint16_t _kilobyte = _byte * 1000;
 constexpr uint32_t _megabyte = _kilobyte * 1000;
 constexpr uint32_t _gigabyte = _megabyte * 1000;
-constexpr uint64_t _terabyte = _gigabyte * 1000;
+//constexpr uint64_t _terabyte = _gigabyte * 1000;
 
 enum Opcodes 
 {
