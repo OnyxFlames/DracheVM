@@ -7,6 +7,85 @@ extern Logger logger;
 
 Object object_buffer;
 
+void variable_handler(byte value, DracheVM &vm)
+{
+	switch (value)
+	{
+	case ADD8:
+		add8(vm);
+		break;
+	case SUB8:
+		sub8(vm);
+		break;
+	case MUL8:
+		mul8(vm);
+		break;
+	case DIV8:
+		div8(vm);
+		break;
+	case ADD16:
+		add16(vm);
+		break;
+	case SUB16:
+		sub16(vm);
+		break;
+	case MUL16:
+		mul16(vm);
+		break;
+	case DIV16:
+		div16(vm);
+		break;
+	case ADD32:
+		add32(vm);
+		break;
+	case SUB32:
+		sub32(vm);
+		break;
+	case MUL32:
+		mul32(vm);
+		break;
+	case DIV32:
+		div32(vm);
+		break;
+	case ADD64:
+		add64(vm);
+		break;
+	case SUB64:
+		sub64(vm);
+		break;
+	case MUL64:
+		mul64(vm);
+		break;
+	case DIV64:
+		div64(vm);
+		break;
+	case ADDF32:
+		addf32(vm);
+		break;
+	case SUBF32:
+		subf32(vm);
+		break;
+	case MULF32:
+		mulf32(vm);
+		break;
+	case DIVF32:
+		divf32(vm);
+		break;
+	case ADDF64:
+		addf64(vm);
+		break;
+	case SUBF64:
+		subf64(vm);
+		break;
+	case MULF64:
+		mulf64(vm);
+		break;
+	case DIVF64:
+		divf64(vm);
+		break;
+	}
+}
+
 void add8(DracheVM &vm)
 {
 	if (vm.get_stack().size() < 2)

@@ -41,8 +41,8 @@ void DracheVM::run()
 		byte byte_buff[2]{ 0 };
 		Object object_buffer; 
 		object_buffer.i64 = 0;	// Clear the buffer to 0. This is to guarantee that when pushing values smaller than 64 bits onto the stack, they aren't corrupted with garbage data.
-		int temp = next();
-		switch (temp)
+		int val = next();
+		switch (val)
 		{
 		case NOP:
 			// Do nothing.
@@ -95,76 +95,30 @@ void DracheVM::run()
 			stack.push(buffer[1]);
 			break;
 		case ADD8:
-			add8(*this);
-			break;
 		case SUB8:
-			sub8(*this);
-			break;
 		case MUL8:
-			mul8(*this);
-			break;
 		case DIV8:
-			div8(*this);
-			break;
 		case ADD16:
-			add16(*this);
-			break;
 		case SUB16:
-			sub16(*this);
-			break;
 		case MUL16:
-			mul16(*this);
-			break;
 		case DIV16:
-			div16(*this);
-			break;
 		case ADD32:
-			add32(*this);
-			break;
 		case SUB32:
-			sub32(*this);
-			break;
 		case MUL32:
-			mul32(*this);
-			break;
 		case DIV32:
-			div32(*this);
-			break;
 		case ADD64:
-			add64(*this);
-			break;
 		case SUB64:
-			sub64(*this);
-			break;
 		case MUL64:
-			mul64(*this);
-			break;
 		case DIV64:
-			div64(*this);
-			break;
 		case ADDF32:
-			addf32(*this);
-			break;
 		case SUBF32:
-			subf32(*this);
-			break;
 		case MULF32:
-			mulf32(*this);
-			break;
 		case DIVF32:
-			divf32(*this);
-			break;
 		case ADDF64:
-			addf64(*this);
-			break;
 		case SUBF64:
-			subf64(*this);
-			break;
 		case MULF64:
-			mulf64(*this);
-			break;
 		case DIVF64:
-			divf64(*this);
+			variable_handler(val, *this);
 			break;
 		case SYSCALL:
 			byte_buff[0] = next();
@@ -289,7 +243,7 @@ vm_state DracheVM::get_state()
 
 void DracheVM::vm_exit()
 {
-	stack_dump();
+	//stack_dump();
 	std::exit(1);
 }
 void DracheVM::stack_dump()

@@ -5,6 +5,8 @@
 
 // i8
 
+void variable_handler(byte value, DracheVM &vm);
+
 void add8(DracheVM &vm);
 void sub8(DracheVM &vm);
 void mul8(DracheVM &vm);
