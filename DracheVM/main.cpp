@@ -67,7 +67,6 @@ int main(int argc, char* argv[])
 		else if (std::strcmp(argv[i], "-time") == 0)
 		{
 			time_performence = true;
-			std::cout << "Debug: testing performence..\n";
 		}
 	}
 
