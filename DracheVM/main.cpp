@@ -75,14 +75,15 @@ int main(int argc, char* argv[])
 	std::shared_ptr<std::stack<Object>> stk_ptr = std::make_shared<std::stack<Object>>(vm.get_stack()); //	Get the pointer of the stack from the instance of the currently running VM. 
 	io = new SystemIO(stk_ptr);																			//	This will be used by almost all the soon-to-be implemented static systems.
 	rng = new RandomNumGen(stk_ptr);
+	
+	if (time_performence)
+		pre = std::chrono::system_clock::now();
+
 	if (compile_mode)
 		compiler.open(compile_file);
+
 	if (run_mode)
-	{
-		if (time_performence)
-			pre = std::chrono::system_clock::now();
 		vm.open(run_file);
-	}
 
 	if (time_performence) 
 	{
@@ -97,5 +98,6 @@ void print_help(std::string prog_name)
 {
 	std::cout << "Usage: \n\t" + prog_name +
 		" -c <filename> to compile.\n\t" +
-		prog_name + " -r <filename> to run." << std::endl;
+		prog_name + " -r <filename> to run.\n\t" +
+		prog_name + " -time to time execution." << std::endl;
 }

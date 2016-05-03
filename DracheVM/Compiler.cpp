@@ -114,6 +114,7 @@ void Compiler::run()
 		else if (buffer == "IO_READINT16") bytecode.push_back(READINT16);
 		else if (buffer == "IO_READINT32") bytecode.push_back(READINT32);
 		else if (buffer == "IO_READINT64") bytecode.push_back(READINT64);
+		else if (buffer == "SETERR") bytecode.push_back(SETERR);
 		else if (buffer == "EXIT")	bytecode.push_back(EXIT);
 		else if (is_declared(label_map, buffer))
 		{

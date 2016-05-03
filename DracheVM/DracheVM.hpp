@@ -14,6 +14,7 @@ struct vm_state
 {
 	bool is_open = false;
 	bool is_error_state = false;
+	uint16_t error_flag;
 	uint32_t current_position = 0x00000000;
 };
 
@@ -24,7 +25,7 @@ private:
 	uint16_t index = 0x00;								// If the ROM is loaded into memory, this variable will be used, otherwise use the file streams pointer.
 	bool in_memory = false;
 	std::array<byte, max_rom_size> ROM{ NOP };			// If the physical ROM is max_rom_size bytes or less, load it into memory and read it off there.
-	uint16_t address;									// The address before jump() was called. Used to restore control after loading in constants.
+	uint16_t address = 0x00;							// The address before jump() was called. Used to restore control after loading in constants.
 	Object _register[4] = {};
 	std::stack<Object> stack;
 	std::ifstream file;
@@ -44,7 +45,7 @@ public:
 	void rel_jump(int32_t jump_distance);
 	void jump(int32_t jump_address = -1);
 	void restore();
-	vm_state get_state();
+	vm_state &get_state();
 	DracheVM* get_vm();
 	~DracheVM();
 };

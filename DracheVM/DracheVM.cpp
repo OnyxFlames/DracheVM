@@ -14,6 +14,7 @@ DracheVM::DracheVM() {}
 
 DracheVM::DracheVM(const std::string filelocation)
 {
+	std::cout << "DEBUG: " << ROM.size() << "\n";
 	open(filelocation);
 }
 
@@ -66,13 +67,13 @@ void DracheVM::run()
 			byte_buff[1] = next();
 			if (is_in_range(0x00, 0x04, (int64_t)byte_buff[0]))
 			{
-				if (byte_buff[0] == 0x00 && is_in_range(0x01, 0x04, byte_buff[1]))	// if the mov is FROM the stack TO a register.
+				if (byte_buff[0] == 0x00 && is_in_range(0x01, 0x04, (int64_t)byte_buff[1]))	// if the mov is FROM the stack TO a register.
 					pop_to_register(byte_buff[1], *this);
 
-				if (is_in_range(0x01, 0x04, byte_buff[0]) && byte_buff[1] == 0x00)
+				if (is_in_range(0x01, 0x04, (int64_t)byte_buff[0]) && byte_buff[1] == 0x00)
 					push_from_register(byte_buff[0], *this);
 
-				if (is_in_range(0x01, 0x04, byte_buff[0]) && is_in_range(0x01, 0x04, byte_buff[1]))
+				if (is_in_range(0x01, 0x04, (int64_t)byte_buff[0]) && is_in_range(0x01, 0x04, (int64_t)byte_buff[1]))
 					move_to_register(byte_buff[0], byte_buff[1], *this);
 			}
 			else
@@ -132,6 +133,15 @@ void DracheVM::run()
 				// Skip the address and continue executing code below.
 				rel_jump(0x02);
 			}
+			break;
+		case SETERR:
+			byte_buff[0] = next();
+			byte_buff[1] = next();
+			state.error_flag = assemble_16bit_address(byte_buff[0], byte_buff[1]);
+			if (state.error_flag == 0x0000)
+				state.is_error_state = false;
+			else
+				state.is_error_state = true;
 			break;
 		case EXIT:
 			// equivalent to state.is_open = false;
@@ -214,7 +224,7 @@ void DracheVM::restore()
 	address = 0x0000;
 }
 
-vm_state DracheVM::get_state()
+vm_state &DracheVM::get_state()
 {
 	if (in_memory)
 		state.current_position = index;
@@ -228,6 +238,11 @@ void DracheVM::vm_exit()
 	//stack_dump();
 	//std::exit(1);
 	state.is_open = false;
+	if (state.is_error_state)
+	{
+		std::cout << "\n\nSystem exited with error code: " << state.error_flag << "\n";
+		stack_dump();
+	}
 }
 void DracheVM::stack_dump()
 {

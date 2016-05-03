@@ -63,6 +63,7 @@ enum Opcodes
 
 	SYSCALL,
 
+	SETERR,
 
 	EXIT,
 };
