@@ -251,13 +251,13 @@ void DracheVM::stack_dump()
 	std::cout << "HEX - DEC\n";
 	for (unsigned i = 0; i < 4; i++)
 	{
-		std::cout << /*std::bitset<64>(_register[i].i64) << " - " <<*/ std::hex << _register[i].get_i64() << " - " << std::dec << _register[i].get_i64() << "\n";
+		std::cout << std::hex << _register[i].get_i64() << " - " << std::dec << _register[i].get_i64() << "\n";
 	}
 	std::cout << "Stack Dump(" << stack.size() << "):\n";
 	std::cout << "HEX - DEC\n";
 	while (!stack.empty())
 	{
-		std::cout << /*std::bitset<64>(stack.top().i64) << " - " <<*/ std::hex << stack.top().get_i64() << " - " << std::dec << stack.top().get_i64() << "\n";
+		std::cout << std::hex << stack.top().get_i64() << " - " << std::dec << stack.top().get_i64() << "\n";
 		stack.pop();
 	}
 
