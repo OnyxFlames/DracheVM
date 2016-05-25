@@ -32,7 +32,7 @@ void RandomNumGen::run_opcode(byte opcode, DracheVM &vm)
 	switch (opcode)
 	{
 	case SETSEED:
-		_seed = vm.get_stack().top().i32;
+		_seed = vm.get_stack().top().get_i32();
 		break;
 	}
 }

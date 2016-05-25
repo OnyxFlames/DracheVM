@@ -40,8 +40,9 @@ void DracheVM::run()
 	while (state.is_open)	// TODO: Have opcodes aware of the VM's state. eg. if it hits an exit make sure to change it to state.is_open = false;
 	{
 		byte byte_buff[2]{ 0 };
-		Object object_buffer; 
-		object_buffer.i64 = 0;	// Clear the buffer to 0. This is to guarantee that when pushing values smaller than 64 bits onto the stack, they aren't corrupted with garbage data.
+		Object object_buffer[2]; 
+		object_buffer[0].set_i64(0);	// Clear the buffer to 0. This is to guarantee that when pushing values smaller than 64 bits onto the stack, they aren't corrupted with garbage data.
+		object_buffer[1].set_i64(0);
 		int val = next();
 		switch (val)
 		{
@@ -87,13 +88,13 @@ void DracheVM::run()
 				logger.elog("vm error: attempted to rotate on empty stack.");
 				break;
 			}
-			Object buffer[2];
-			buffer[0] = stack.top();
+			//Object buffer[2];
+			object_buffer[0] = stack.top();
 			stack.pop();
-			buffer[1] = stack.top();
+			object_buffer[1] = stack.top();
 			stack.pop();
-			stack.push(buffer[0]);
-			stack.push(buffer[1]);
+			stack.push(object_buffer[0]);
+			stack.push(object_buffer[1]);
 			break;
 		case ADD8: case SUB8: case MUL8: case DIV8:
 		case ADD16: case SUB16: case MUL16: case DIV16:
@@ -116,10 +117,10 @@ void DracheVM::run()
 					(byte_buff[0], byte_buff[1]));
 			break;
 		case EQGOTO:
-			object_buffer = stack.top();
+			object_buffer[0] = stack.top();
 			stack.pop();
 			// compare the top two values on the stack as their pure 64-bit wide values.
-			if (object_buffer.i64 == stack.top().i64)
+			if (object_buffer[0].get_i64() == stack.top().get_i64())
 			{
 				stack.pop();
 				byte_buff[0] = next();
@@ -250,13 +251,13 @@ void DracheVM::stack_dump()
 	std::cout << "HEX - DEC\n";
 	for (unsigned i = 0; i < 4; i++)
 	{
-		std::cout << /*std::bitset<64>(_register[i].i64) << " - " <<*/ std::hex << _register[i].i64 << " - " << std::dec << _register[i].i64 << "\n";
+		std::cout << /*std::bitset<64>(_register[i].i64) << " - " <<*/ std::hex << _register[i].get_i64() << " - " << std::dec << _register[i].get_i64() << "\n";
 	}
 	std::cout << "Stack Dump(" << stack.size() << "):\n";
 	std::cout << "HEX - DEC\n";
 	while (!stack.empty())
 	{
-		std::cout << /*std::bitset<64>(stack.top().i64) << " - " <<*/ std::hex << stack.top().i64 << " - " << std::dec << stack.top().i64 << "\n";
+		std::cout << /*std::bitset<64>(stack.top().i64) << " - " <<*/ std::hex << stack.top().get_i64() << " - " << std::dec << stack.top().get_i64() << "\n";
 		stack.pop();
 	}
 
@@ -265,7 +266,7 @@ void DracheVM::stack_dump()
 	state.is_open = false;
 	state.current_position = 0x00000000;
 	for (int i = 0; i < 4; i++)
-		_register[i].i64 = 0x00;
+		_register[i].set_i64(0x00);
 	while (!stack.empty())
 		stack.pop();
 

@@ -6,7 +6,7 @@ void clear_registers(Object _registers[4])
 {
 	for (int i = 0; i < 3; i++)
 	{
-		_registers[i].i64 = 0x00;
+		_registers[i].set_i64(0x00);
 	}
 }
 

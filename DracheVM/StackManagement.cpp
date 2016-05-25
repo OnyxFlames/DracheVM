@@ -14,18 +14,18 @@ extern Logger logger;
 void push_to_stack(DracheVM &vm)
 {
 	Object object_buffer;
-	object_buffer.i64 = 0;	// Clear the buffer to 0. This is to guarantee that when pushing values smaller than 64 bits onto the stack, they aren't corrupted with garbage data.
+	object_buffer.set_i64(0);	// Clear the buffer to 0. This is to guarantee that when pushing values smaller than 64 bits onto the stack, they aren't corrupted with garbage data.
 	byte variable_size = vm.next();
 	if (variable_size == 1)	// char*
 	{
-		std::strcpy(object_buffer.str,
+		std::strcpy(object_buffer.get_str(),
 								from_c_str(vm)	// This reads bytes until it reaches a null byte, casts it into a byte array, then puts that byte array into a std::string. Returns said string.
 											.c_str());
 		vm.get_stack().push(object_buffer);
 	}
 	else if (variable_size == 2)
 	{
-		object_buffer.i8 = vm.next();
+		object_buffer.set_i8(vm.next());
 		vm.get_stack().push(object_buffer);
 	}
 
@@ -38,7 +38,7 @@ void push_to_stack(DracheVM &vm)
 			buffer <<= 8;
 		}
 		buffer += vm.next();
-		object_buffer.i16 = buffer;
+		object_buffer.set_i16(buffer);
 		vm.get_stack().push(object_buffer);
 	}
 	else if (variable_size == 4)
@@ -50,7 +50,7 @@ void push_to_stack(DracheVM &vm)
 			buffer <<= 8;
 		}
 		buffer += vm.next();
-		object_buffer.i32 = buffer;
+		object_buffer.set_i32(buffer);
 		vm.get_stack().push(object_buffer);
 	}
 	else if (variable_size == 5)
@@ -62,7 +62,7 @@ void push_to_stack(DracheVM &vm)
 			buffer <<= 8;
 		}
 		buffer += vm.next();
-		object_buffer.i64 = buffer;
+		object_buffer.set_i64(buffer);
 		vm.get_stack().push(object_buffer);
 	}
 	else if (variable_size == 6)
@@ -71,12 +71,22 @@ void push_to_stack(DracheVM &vm)
 		// This is due to how floating point values are stored in memory as fractions, making loading them byte by byte rather difficult.
 		// For documentation on what this execution branch is doing refer the from_c_str(DracheVM &vm) function in Misc_Utils.cpp
 
-		object_buffer.f32 = (float)atof(from_c_str(vm).c_str());
+		object_buffer.set_f32
+		(
+			(
+				(float)atof(from_c_str(vm).c_str())
+			)
+		);
 		vm.get_stack().push(object_buffer);
 	}
 	else if (variable_size == 7)
 	{
-		object_buffer.f64 = atof(from_c_str(vm).c_str());
+		object_buffer.set_f64
+		(
+			(
+				atof(from_c_str(vm).c_str())
+			)
+		);
 		vm.get_stack().push(object_buffer);
 	}
 	else
@@ -105,7 +115,7 @@ void push_from_register(uint8_t register_index, DracheVM &vm)
 {
 	register_index--; // Registers are passed 1-based. Decrement to get the actual register.
 	vm.get_stack().push(vm.get_register(register_index));
-	vm.get_register(register_index).i64 = 0; // Clear the register after adding its value back onto the stack.
+	vm.get_register(register_index).set_i64(0); // Clear the register after adding its value back onto the stack.
 }
 
 void move_to_register(uint8_t register_from, uint8_t register_to, DracheVM &vm)
@@ -114,6 +124,6 @@ void move_to_register(uint8_t register_from, uint8_t register_to, DracheVM &vm)
 	register_from--;
 	register_to--;
 	// Move the data from the FROM register to the TO register.
-	vm.get_register(register_to).i64 = vm.get_register(register_from).i64;
-	vm.get_register(register_from).i64 = 0x00;	// Clear the FROM registers contents.
+	vm.get_register(register_to).set_i64((vm.get_register(register_from).get_i64()));
+	vm.get_register(register_from).set_i64(0x00);	// Clear the FROM registers contents.
 }

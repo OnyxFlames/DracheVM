@@ -94,11 +94,11 @@ void add8(DracheVM &vm)
 		std::exit(-1);
 	}
 	int8_t buff[2] = { 0x00 };
-	buff[0] = vm.get_stack().top().i8;
+	buff[0] = vm.get_stack().top().get_i8();
 	vm.get_stack().pop();
-	buff[1] = vm.get_stack().top().i8;
+	buff[1] = vm.get_stack().top().get_i8();
 	vm.get_stack().pop();
-	object_buffer.i8 = buff[0] + buff[1];
+	object_buffer.set_i8((buff[0] + buff[1]));
 	vm.get_stack().push(object_buffer);
 }
 void sub8(DracheVM &vm)
@@ -109,11 +109,11 @@ void sub8(DracheVM &vm)
 		std::exit(-1);
 	}
 	int8_t buff[2] = { 0x00 };
-	buff[0] = vm.get_stack().top().i8;
+	buff[0] = vm.get_stack().top().get_i8();
 	vm.get_stack().pop();
-	buff[1] = vm.get_stack().top().i8;
+	buff[1] = vm.get_stack().top().get_i8();
 	vm.get_stack().pop();
-	object_buffer.i8 = buff[0] - buff[1];
+	object_buffer.set_i8((buff[0] - buff[1]));
 	vm.get_stack().push(object_buffer);
 }
 void mul8(DracheVM &vm)
@@ -124,11 +124,11 @@ void mul8(DracheVM &vm)
 		std::exit(-1);
 	}
 	int8_t buff[2] = { 0x00 };
-	buff[0] = vm.get_stack().top().i8;
+	buff[0] = vm.get_stack().top().get_i8();
 	vm.get_stack().pop();
-	buff[1] = vm.get_stack().top().i8;
+	buff[1] = vm.get_stack().top().get_i8();
 	vm.get_stack().pop();
-	object_buffer.i8 = buff[0] * buff[1];
+	object_buffer.set_i8((buff[0] * buff[1]));
 	vm.get_stack().push(object_buffer);
 }
 void div8(DracheVM &vm)
@@ -139,11 +139,11 @@ void div8(DracheVM &vm)
 		std::exit(-1);
 	}
 	int8_t buff[2] = { 0x00 };
-	buff[0] = vm.get_stack().top().i8;
+	buff[0] = vm.get_stack().top().get_i8();
 	vm.get_stack().pop();
-	buff[1] = vm.get_stack().top().i8;
+	buff[1] = vm.get_stack().top().get_i8();
 	vm.get_stack().pop();
-	object_buffer.i8 = buff[0] / buff[1];
+	object_buffer.set_i8((buff[0] / buff[1]));
 	vm.get_stack().push(object_buffer);
 }
 
@@ -155,11 +155,11 @@ void add16(DracheVM &vm)
 		std::exit(-1);
 	}
 	int16_t buff[2] = { 0x00 };
-	buff[0] = vm.get_stack().top().i16;
+	buff[0] = vm.get_stack().top().get_i16();
 	vm.get_stack().pop();
-	buff[1] = vm.get_stack().top().i16;
+	buff[1] = vm.get_stack().top().get_i16();
 	vm.get_stack().pop();
-	object_buffer.i16 = buff[0] + buff[1];
+	object_buffer.set_i16((buff[0] + buff[1]));
 	vm.get_stack().push(object_buffer);
 }
 void sub16(DracheVM &vm)
@@ -170,11 +170,11 @@ void sub16(DracheVM &vm)
 		std::exit(-1);
 	}
 	int16_t buff[2] = { 0x00 };
-	buff[0] = vm.get_stack().top().i16;
+	buff[0] = vm.get_stack().top().get_i16();
 	vm.get_stack().pop();
-	buff[1] = vm.get_stack().top().i16;
+	buff[1] = vm.get_stack().top().get_i16();
 	vm.get_stack().pop();
-	object_buffer.i16 = buff[0] - buff[1];
+	object_buffer.set_i16((buff[0] - buff[1]));
 	vm.get_stack().push(object_buffer);
 }
 void mul16(DracheVM &vm)
@@ -185,11 +185,11 @@ void mul16(DracheVM &vm)
 		std::exit(-1);
 	}
 	int16_t buff[2] = { 0x00 };
-	buff[0] = vm.get_stack().top().i16;
+	buff[0] = vm.get_stack().top().get_i16();
 	vm.get_stack().pop();
-	buff[1] = vm.get_stack().top().i16;
+	buff[1] = vm.get_stack().top().get_i16();
 	vm.get_stack().pop();
-	object_buffer.i16 = buff[0] * buff[1];
+	object_buffer.set_i16((buff[0] * buff[1]));
 	vm.get_stack().push(object_buffer);
 }
 void div16(DracheVM &vm)
@@ -200,11 +200,11 @@ void div16(DracheVM &vm)
 		std::exit(-1);
 	}
 	int16_t buff[2] = { 0x00 };
-	buff[0] = vm.get_stack().top().i16;
+	buff[0] = vm.get_stack().top().get_i16();
 	vm.get_stack().pop();
-	buff[1] = vm.get_stack().top().i16;
+	buff[1] = vm.get_stack().top().get_i16();
 	vm.get_stack().pop();
-	object_buffer.i16 = buff[0] / buff[1];
+	object_buffer.set_i16((buff[0] / buff[1]));
 	vm.get_stack().push(object_buffer);
 }
 
@@ -216,11 +216,11 @@ void add32(DracheVM &vm)
 		std::exit(-1);
 	}
 	int32_t buff[2] = { 0x00 };
-	buff[0] = vm.get_stack().top().i32;
+	buff[0] = vm.get_stack().top().get_i32();
 	vm.get_stack().pop();
-	buff[1] = vm.get_stack().top().i32;
+	buff[1] = vm.get_stack().top().get_i32();
 	vm.get_stack().pop();
-	object_buffer.i32 = buff[0] + buff[1];
+	object_buffer.set_i32((buff[0] + buff[1]));
 	vm.get_stack().push(object_buffer);
 }
 void sub32(DracheVM &vm)
@@ -231,11 +231,11 @@ void sub32(DracheVM &vm)
 		std::exit(-1);
 	}
 	int32_t buff[2] = { 0x00 };
-	buff[0] = vm.get_stack().top().i32;
+	buff[0] = vm.get_stack().top().get_i32();
 	vm.get_stack().pop();
-	buff[1] = vm.get_stack().top().i32;
+	buff[1] = vm.get_stack().top().get_i32();
 	vm.get_stack().pop();
-	object_buffer.i32 = buff[0] - buff[1];
+	object_buffer.set_i32((buff[0] - buff[1]));
 	vm.get_stack().push(object_buffer);
 }
 void mul32(DracheVM &vm)
@@ -246,11 +246,11 @@ void mul32(DracheVM &vm)
 		std::exit(-1);
 	}
 	int32_t buff[2] = { 0x00 };
-	buff[0] = vm.get_stack().top().i32;
+	buff[0] = vm.get_stack().top().get_i32();
 	vm.get_stack().pop();
-	buff[1] = vm.get_stack().top().i32;
+	buff[1] = vm.get_stack().top().get_i32();
 	vm.get_stack().pop();
-	object_buffer.i32 = buff[0] * buff[1];
+	object_buffer.set_i32((buff[0] * buff[1]));
 	vm.get_stack().push(object_buffer);
 }
 void div32(DracheVM &vm)
@@ -261,11 +261,11 @@ void div32(DracheVM &vm)
 		std::exit(-1);
 	}
 	int32_t buff[2] = { 0x00 };
-	buff[0] = vm.get_stack().top().i32;
+	buff[0] = vm.get_stack().top().get_i32();
 	vm.get_stack().pop();
-	buff[1] = vm.get_stack().top().i32;
+	buff[1] = vm.get_stack().top().get_i32();
 	vm.get_stack().pop();
-	object_buffer.i32 = buff[0] / buff[1];
+	object_buffer.set_i32((buff[0] / buff[1]));
 	vm.get_stack().push(object_buffer);
 }
 
@@ -277,11 +277,11 @@ void add64(DracheVM &vm)
 		std::exit(-1);
 	}
 	int64_t buff[2] = { 0x00 };
-	buff[0] = vm.get_stack().top().i64;
+	buff[0] = vm.get_stack().top().get_i64();
 	vm.get_stack().pop();
-	buff[1] = vm.get_stack().top().i64;
+	buff[1] = vm.get_stack().top().get_i64();
 	vm.get_stack().pop();
-	object_buffer.i64 = buff[0] + buff[1];
+	object_buffer.set_i64((buff[0] + buff[1]));
 	vm.get_stack().push(object_buffer);
 }
 void sub64(DracheVM &vm)
@@ -292,11 +292,11 @@ void sub64(DracheVM &vm)
 		std::exit(-1);
 	}
 	int64_t buff[2] = { 0x00 };
-	buff[0] = vm.get_stack().top().i64;
+	buff[0] = vm.get_stack().top().get_i64();
 	vm.get_stack().pop();
-	buff[1] = vm.get_stack().top().i64;
+	buff[1] = vm.get_stack().top().get_i64();
 	vm.get_stack().pop();
-	object_buffer.i64 = buff[0] - buff[1];
+	object_buffer.set_i64((buff[0] - buff[1]));
 	vm.get_stack().push(object_buffer);
 }
 void mul64(DracheVM &vm)
@@ -307,11 +307,11 @@ void mul64(DracheVM &vm)
 		std::exit(-1);
 	}
 	int64_t buff[2] = { 0x00 };
-	buff[0] = vm.get_stack().top().i64;
+	buff[0] = vm.get_stack().top().get_i64();
 	vm.get_stack().pop();
-	buff[1] = vm.get_stack().top().i64;
+	buff[1] = vm.get_stack().top().get_i64();
 	vm.get_stack().pop();
-	object_buffer.i64 = buff[0] * buff[1];
+	object_buffer.set_i64((buff[0] * buff[1]));
 	vm.get_stack().push(object_buffer);
 }
 void div64(DracheVM &vm)
@@ -322,11 +322,11 @@ void div64(DracheVM &vm)
 		std::exit(-1);
 	}
 	int64_t buff[2] = { 0x00 };
-	buff[0] = vm.get_stack().top().i64;
+	buff[0] = vm.get_stack().top().get_i64();
 	vm.get_stack().pop();
-	buff[1] = vm.get_stack().top().i64;
+	buff[1] = vm.get_stack().top().get_i64();
 	vm.get_stack().pop();
-	object_buffer.i64 = buff[0] / buff[1];
+	object_buffer.set_i64((buff[0] / buff[1]));
 	vm.get_stack().push(object_buffer);
 }
 
