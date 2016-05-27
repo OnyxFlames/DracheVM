@@ -4,6 +4,7 @@
 #include <string>
 #include <chrono>
 
+#include "Decompiler.hpp"
 #include "Compiler.hpp"
 #include "DracheVM.hpp"
 #include "Logger.hpp"
@@ -17,10 +18,12 @@
 Logger logger("output.log");
 
 bool time_performence = false;
+bool decompile_mode = false;
 bool compile_mode = false;
 bool run_mode = false;
 std::string compile_file;
 std::string run_file;
+std::string decompile_file_in, decompile_file_out;
 
 std::chrono::time_point<std::chrono::system_clock> pre, post;
 
@@ -64,12 +67,18 @@ int main(int argc, char* argv[])
 			compile_mode = true;
 			compile_file = argv[++i];
 		}
+		else if (std::strcmp(argv[i], "-d") == 0)
+		{
+			decompile_mode = true;
+			decompile_file_in = argv[++i];
+			decompile_file_out = argv[++i];
+		}
 		else if (std::strcmp(argv[i], "-time") == 0)
 		{
 			time_performence = true;
 		}
 	}
-
+	Decompiler decompiler;
 	Compiler compiler;
 	DracheVM vm;
 	std::shared_ptr<std::stack<Object>> stk_ptr = std::make_shared<std::stack<Object>>(vm.get_stack()); //	Get the pointer of the stack from the instance of the currently running VM. 
@@ -78,6 +87,9 @@ int main(int argc, char* argv[])
 	
 	if (time_performence)
 		pre = std::chrono::system_clock::now();
+
+	if (decompile_mode)
+		decompiler.open_and_run(decompile_file_in, decompile_file_out);
 
 	if (compile_mode)
 		compiler.open(compile_file);

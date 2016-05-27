@@ -88,11 +88,16 @@ void variable_handler(byte value, DracheVM &vm)
 
 void add8(DracheVM &vm)
 {
-	if (vm.get_stack().size() < 2)
-	{
-		logger.elog("vm error: attempted to pop from an empty stack! Exiting. (OPCODE ADD8)");
-		std::exit(-1);
-	}
+	// Get the two registers that you intent on taking values from.
+	byte buffer[2] = { 0x00 };
+	buffer[0] = vm.next();
+	buffer[1] = vm.next();
+	// apply to operation to them, push result on stack.
+	object_buffer.set_i8(vm.get_register(buffer[0]).get_i8() + vm.get_register(buffer[1]).get_i8());
+	vm.get_stack().push(object_buffer);
+	// This (proper) style of manipulating variables should be much faster as well.
+
+	/*
 	int8_t buff[2] = { 0x00 };
 	buff[0] = vm.get_stack().top().get_i8();
 	vm.get_stack().pop();
@@ -100,14 +105,17 @@ void add8(DracheVM &vm)
 	vm.get_stack().pop();
 	object_buffer.set_i8((buff[0] + buff[1]));
 	vm.get_stack().push(object_buffer);
+	*/
 }
 void sub8(DracheVM &vm)
 {
-	if (vm.get_stack().size() < 2)
-	{
-		logger.elog("vm error: attempted to pop from an empty stack! Exiting. (OPCODE SUB8)");
-		std::exit(-1);
-	}
+	byte buffer[2] = { 0x00 };
+	buffer[0] = vm.next();
+	buffer[1] = vm.next();
+	object_buffer.set_i8(vm.get_register(buffer[0]).get_i8() - vm.get_register(buffer[1]).get_i8());
+	vm.get_stack().push(object_buffer);
+
+	/*
 	int8_t buff[2] = { 0x00 };
 	buff[0] = vm.get_stack().top().get_i8();
 	vm.get_stack().pop();
@@ -115,14 +123,16 @@ void sub8(DracheVM &vm)
 	vm.get_stack().pop();
 	object_buffer.set_i8((buff[0] - buff[1]));
 	vm.get_stack().push(object_buffer);
+	*/
 }
 void mul8(DracheVM &vm)
 {
-	if (vm.get_stack().size() < 2)
-	{
-		logger.elog("vm error: attempted to pop from an empty stack! Exiting. (OPCODE MUL8)");
-		std::exit(-1);
-	}
+	byte buffer[2] = { 0x00 };
+	buffer[0] = vm.next();
+	buffer[1] = vm.next();
+	object_buffer.set_i8(vm.get_register(buffer[0]).get_i8() * vm.get_register(buffer[1]).get_i8());
+	vm.get_stack().push(object_buffer);
+	/*
 	int8_t buff[2] = { 0x00 };
 	buff[0] = vm.get_stack().top().get_i8();
 	vm.get_stack().pop();
@@ -130,14 +140,17 @@ void mul8(DracheVM &vm)
 	vm.get_stack().pop();
 	object_buffer.set_i8((buff[0] * buff[1]));
 	vm.get_stack().push(object_buffer);
+	*/
 }
 void div8(DracheVM &vm)
 {
+	byte buffer[2] = { 0x00 };
+	buffer[0] = vm.next();
+	buffer[1] = vm.next();
+	object_buffer.set_i8(vm.get_register(buffer[0]).get_i8() / vm.get_register(buffer[1]).get_i8());
+	vm.get_stack().push(object_buffer);
+	/*
 	if (vm.get_stack().size() < 2)
-	{
-		logger.elog("vm error: attempted to pop from an empty stack! Exiting. (OPCODE DIV8)");
-		std::exit(-1);
-	}
 	int8_t buff[2] = { 0x00 };
 	buff[0] = vm.get_stack().top().get_i8();
 	vm.get_stack().pop();
@@ -145,15 +158,17 @@ void div8(DracheVM &vm)
 	vm.get_stack().pop();
 	object_buffer.set_i8((buff[0] / buff[1]));
 	vm.get_stack().push(object_buffer);
+	*/
 }
 
 void add16(DracheVM &vm)
 {
-	if (vm.get_stack().size() < 2)
-	{
-		logger.elog("vm error: attempted to pop from an empty stack! Exiting. (OPCODE ADD16)");
-		std::exit(-1);
-	}
+	byte buffer[2] = { 0x00 };
+	buffer[0] = vm.next();
+	buffer[1] = vm.next();
+	object_buffer.set_i16(vm.get_register(buffer[0]).get_i16() + vm.get_register(buffer[1]).get_i16());
+	vm.get_stack().push(object_buffer);
+	/*
 	int16_t buff[2] = { 0x00 };
 	buff[0] = vm.get_stack().top().get_i16();
 	vm.get_stack().pop();
@@ -161,14 +176,16 @@ void add16(DracheVM &vm)
 	vm.get_stack().pop();
 	object_buffer.set_i16((buff[0] + buff[1]));
 	vm.get_stack().push(object_buffer);
+	*/
 }
 void sub16(DracheVM &vm)
 {
-	if (vm.get_stack().size() < 2)
-	{
-		logger.elog("vm error: attempted to pop from an empty stack! Exiting. (OPCODE SUB16");
-		std::exit(-1);
-	}
+	byte buffer[2] = { 0x00 };
+	buffer[0] = vm.next();
+	buffer[1] = vm.next();
+	object_buffer.set_i16(vm.get_register(buffer[0]).get_i16() - vm.get_register(buffer[1]).get_i16());
+	vm.get_stack().push(object_buffer);
+	/*
 	int16_t buff[2] = { 0x00 };
 	buff[0] = vm.get_stack().top().get_i16();
 	vm.get_stack().pop();
@@ -176,14 +193,16 @@ void sub16(DracheVM &vm)
 	vm.get_stack().pop();
 	object_buffer.set_i16((buff[0] - buff[1]));
 	vm.get_stack().push(object_buffer);
+	*/
 }
 void mul16(DracheVM &vm)
 {
-	if (vm.get_stack().size() < 2)
-	{
-		logger.elog("vm error: attempted to pop from an empty stack! Exiting. (OPCODE MUL16)");
-		std::exit(-1);
-	}
+	byte buffer[2] = { 0x00 };
+	buffer[0] = vm.next();
+	buffer[1] = vm.next();
+	object_buffer.set_i16(vm.get_register(buffer[0]).get_i16() * vm.get_register(buffer[1]).get_i16());
+	vm.get_stack().push(object_buffer);
+	/*
 	int16_t buff[2] = { 0x00 };
 	buff[0] = vm.get_stack().top().get_i16();
 	vm.get_stack().pop();
@@ -191,14 +210,16 @@ void mul16(DracheVM &vm)
 	vm.get_stack().pop();
 	object_buffer.set_i16((buff[0] * buff[1]));
 	vm.get_stack().push(object_buffer);
+	*/
 }
 void div16(DracheVM &vm)
 {
-	if (vm.get_stack().size() < 2)
-	{
-		logger.elog("vm error: attempted to pop from an empty stack! Exiting. (OPCODE DIV16)");
-		std::exit(-1);
-	}
+	byte buffer[2] = { 0x00 };
+	buffer[0] = vm.next();
+	buffer[1] = vm.next();
+	object_buffer.set_i16(vm.get_register(buffer[0]).get_i16() / vm.get_register(buffer[1]).get_i16());
+	vm.get_stack().push(object_buffer);
+	/*
 	int16_t buff[2] = { 0x00 };
 	buff[0] = vm.get_stack().top().get_i16();
 	vm.get_stack().pop();
@@ -206,6 +227,7 @@ void div16(DracheVM &vm)
 	vm.get_stack().pop();
 	object_buffer.set_i16((buff[0] / buff[1]));
 	vm.get_stack().push(object_buffer);
+	*/
 }
 
 void add32(DracheVM &vm)

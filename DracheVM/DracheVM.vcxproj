@@ -113,6 +113,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Compiler.cpp" />
+    <ClCompile Include="Decompiler.cpp" />
     <ClCompile Include="DracheVM.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
@@ -125,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Compiler.hpp" />
+    <ClInclude Include="Decompiler.hpp" />
     <ClInclude Include="DracheVM.hpp" />
     <ClInclude Include="Logger.hpp" />
     <ClInclude Include="Misc_Utils.hpp" />

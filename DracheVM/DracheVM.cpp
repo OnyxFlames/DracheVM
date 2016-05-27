@@ -27,8 +27,8 @@ void DracheVM::open(std::string filelocation)
 		std::exit(-1);
 	}
 	state.is_open = true;
-	if (get_rom_size() < max_rom_size)	// Modify DracheVM::run() to return bytes from either memory or the ROM. Prioritize memory as it is faster.
-		load_into_memory();		// This will be added once returning from memory vs returning from actual file have the same results(it's buggy at the moment)
+	if (get_rom_size() < max_rom_size)	// Modify DracheVM::run() to return bytes from either memory or the ROM. Prioritize reading from memory, as it is faster.
+		load_into_memory();
 	run();
 }
 
