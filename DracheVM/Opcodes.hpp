@@ -2,6 +2,8 @@
 #define OPCODES_HPP
 
 #include <cstdint>
+#include <string>
+#include <array>
 
 typedef unsigned char byte;
 
@@ -66,6 +68,8 @@ enum Opcodes
 	SETERR,
 
 	EXIT,
+
+	TOTAL_OPCODES = (EXIT)
 };
 
 #endif
@@ -79,4 +83,27 @@ enum Opcodes
 		5 = i64
 		6 = f32
 		7 = f64
+*/
+/*
+std::array<std::string, TOTAL_OPCODES + 1> opcode_strs = 
+{
+	"NOP", "PUSH", "POP", "ALLOC", "DEALLOC", "ROT", "MOV",
+
+	"ADD8", "SUB8", "MUL8", "DIV8",
+	"ADD16", "SUB16", "MUL16", "DIV16",
+	"ADD32", "SUB32", "MUL32", "DIV32",
+	"ADD64", "SUB64", "MUL64", "DIV64",
+	"ADDF32","SUBF32", "MULF32", "DIVF32",
+	"ADDF64", "SUBF64", "MULF64", "DIVF64",
+
+	"i8TOi16", "i8TOi32", "i8TOi64", "i8TOf32", "i8TOf64",
+	"i16TOi8", "i16TOi32", "i16TOi64", "i16TOf32", "i16TOf64",
+	"i32TOi8", "i32TOi16", "i32TOi64", "i32TOf32", "i32TOf64",
+	"i64TOi8", "i64TOi16", "i64TOi32", "i64TOf32", "i64TOf64",
+	"f32TOi8", "f32TOi16", "f32TOi32", "f32TOi64", "f32TOf64",
+	"f64TOi8", "f64TOi16", "f64TOi32", "f64TOi64", "f64TOf32",
+
+	"GOTO", "EQGOTO", "INEQGOTO", "LESSGOTO", "GRTRGOTO", "GOTOASADDR", "SYSCALL", "SETERR", "EXIT",
+
+};
 */

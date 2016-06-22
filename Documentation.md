@@ -26,7 +26,7 @@ DEALLOC
 This opcode will attempt to deallocate the value pointed to by the top value of the stack(C-string literal)
 If this fails, or is called when the top of the stack is not manually allocated, this can cause a crash.
 
-NOTE: You can give the top value a any value you want and attempt to deallocate it using this opcode, if the value was manually allocated at some point, this will work. Although it is not advised.
+NOTE: You can give the top value any value you want and attempt to deallocate it using this opcode, if the value was manually allocated at some point, this will work. Although it is not advised.
 ```
 ROT
 ```

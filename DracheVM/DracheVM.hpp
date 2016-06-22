@@ -35,6 +35,8 @@ private:
 	size_t get_rom_size();
 	void load_into_memory();
 public:
+	bool trace = false;
+
 	DracheVM();
 	DracheVM(const std::string filelocation);
 	void open(std::string file);
@@ -45,7 +47,7 @@ public:
 	void rel_jump(int32_t jump_distance);
 	void jump(int32_t jump_address = -1);
 	void restore();
-	vm_state &get_state();
+	vm_state& get_state();
 	DracheVM* get_vm();
 	~DracheVM();
 };

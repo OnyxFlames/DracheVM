@@ -81,6 +81,9 @@ int main(int argc, char* argv[])
 	Decompiler decompiler;
 	Compiler compiler;
 	DracheVM vm;
+
+	vm.trace = true;
+
 	std::shared_ptr<std::stack<Object>> stk_ptr = std::make_shared<std::stack<Object>>(vm.get_stack()); //	Get the pointer of the stack from the instance of the currently running VM. 
 	io = new SystemIO(stk_ptr);																			//	This will be used by almost all the soon-to-be implemented static systems.
 	rng = new RandomNumGen(stk_ptr);
