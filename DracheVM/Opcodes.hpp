@@ -69,10 +69,12 @@ enum Opcodes
 
 	EXIT,
 
-	TOTAL_OPCODES = (EXIT)
-};
 
-#endif
+
+
+	_LAST_OP,
+	TOTAL_OPCODES = _LAST_OP
+};
 
 /*	
 	--Variable Legend--
@@ -84,8 +86,8 @@ enum Opcodes
 		6 = f32
 		7 = f64
 */
-/*
-std::array<std::string, TOTAL_OPCODES + 1> opcode_strs = 
+
+static std::array<std::string, TOTAL_OPCODES> opcode_strs =
 {
 	"NOP", "PUSH", "POP", "ALLOC", "DEALLOC", "ROT", "MOV",
 
@@ -106,4 +108,5 @@ std::array<std::string, TOTAL_OPCODES + 1> opcode_strs =
 	"GOTO", "EQGOTO", "INEQGOTO", "LESSGOTO", "GRTRGOTO", "GOTOASADDR", "SYSCALL", "SETERR", "EXIT",
 
 };
-*/
+
+#endif
