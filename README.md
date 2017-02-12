@@ -6,3 +6,5 @@ To compile on Linux (or OS X although not tested) you will need at least g++ ver
 
 #Documentation
 Documentation can be found [here](Documentation.md)
+
+#Note: This project is deprecated and will soon be replaced.

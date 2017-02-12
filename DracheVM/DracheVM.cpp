@@ -151,15 +151,15 @@ void DracheVM::run()
 		default:
 			logger.elog("vm error: read unknown byte. rom could be corrupted!");
 		}
-		/*
+		
 		if (trace)
 		{
 			if (val <= TOTAL_OPCODES)
-				std::cout << "Callstack: [" << opcode_strs[val] << "]\n";
+				std::cout << "\nCallstack: [" << opcode_strs[val] << "]\n";
 			else
-				std::cout << "Callstack: [" << std::hex << val  << std::dec << "]\n";
+				std::cout << "\nCallstack: [" << std::hex << val  << std::dec << "]\n";
 		}
-		*/
+		
 	}
 }
 
